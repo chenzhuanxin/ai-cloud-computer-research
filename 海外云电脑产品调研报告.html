@@ -594,7 +594,8 @@ const VERIFIED = [
   {name:'Frame → Dizzion', verdict:'<span class="tag">品牌与主体已变更</span>', note:'Frame 原为 Nutanix 的桌面即服务产品，现由 Dizzion 运营（Dizzion Frame / Dizzion DaaS），采用「按桌面」而非「按用户」的订阅方式。'},
   {name:'NVIDIA GeForce NOW / Xbox Cloud Gaming', verdict:'<span class="tag">云游戏对照项</span>', note:'两者均不属于通用云电脑/云桌面：GeForce NOW 串流用户已购游戏、Xbox Cloud Gaming 串流订阅目录内游戏，均无 Windows 桌面与任意软件安装能力，故仅作对照项纳入主表。'},
   {name:"Dizzion / Workspot / Vagon / Blacknut", verdict:'<span class="tag">价格口径不完整</span>', note:'Dizzion 按桌面询价、Workspot 仅公布区间（$10–200/用户/月）、Vagon 与 Blacknut 的机型与价格页信息有限，相关字段已按「待确认」或区间标注，未纳入价格散点图。'},
-  {name:'airgpu / Boosteroid', verdict:'<span class="tag">按小时/订阅制，无免费额度</span>', note:'airgpu 为信用点按小时计费、Boosteroid 仅付费订阅，两者均无免费试用；价格已按每月 160 小时（airgpu）或年付折算（Boosteroid）纳入散点图并标注折算方式。'}
+  {name:'airgpu / Boosteroid', verdict:'<span class="tag">按小时/订阅制，无免费额度</span>', note:'airgpu 为信用点按小时计费、Boosteroid 仅付费订阅，两者均无免费试用；价格已按每月 160 小时（airgpu）或年付折算（Boosteroid）纳入散点图并标注折算方式。'},
+  {name:'第三方「云电脑 / 云桌面」代理站与折扣站', verdict:'<span class="tag">仿冒站风险</span>', note:'检索海外云电脑同样会命中以「AWS / Windows 365 折扣」「Citrix / Omnissa 低价授权」为名的第三方代理页与折扣站。本轮官方入口与价格只采信厂商自有域名（aws.amazon.com、azure.microsoft.com、microsoft.com、citrix.com、omnissa.com、nvidia.com、shadow.tech 等），代理站与折扣站一律不作为依据。'}
 ];
 
 const SOURCES = [
@@ -604,15 +605,17 @@ const SOURCES = [
     ["官方站点","<a class=\"ext\" href=\"https://www.amazonaws.cn/en/workspaces/pricing/\">AWS 中国区 WorkSpaces 定价</a>","中国区 Performance 2vCPU/8GB ¥554.20/月、按小时价"]
   ]},
   {p:"Amazon WorkSpaces Applications（原 AppStream 2.0）", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://aws.amazon.com/appstream2/pricing/\">AWS AppStream 2.0 定价页</a>","stream.standard.medium $0.084/小时、g4dn.xlarge 约 $1.45/小时、停止实例 $0.025/小时、RDS SAL 许可"]
+    ["官方站点","<a class=\"ext\" href=\"https://aws.amazon.com/appstream2/pricing/\">AWS AppStream 2.0 定价页</a>","stream.standard.medium $0.084/小时、g4dn.xlarge 约 $1.45/小时、停止实例 $0.025/小时、RDS SAL 许可"],
+    ["官方站点","<a class=\"ext\" href=\"https://aws.amazon.com/appstream2/\">AWS AppStream 2.0 产品页</a>","应用流式交付定位、与 WorkSpaces Pools 的关系"]
   ]},
   {p:"Microsoft Azure Virtual Desktop（AVD）", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://azure.microsoft.com/en-us/pricing/details/virtual-desktop/\">Azure Virtual Desktop 定价页</a>","外部用户 $10/$5.50、BYOL 免许可费、中国区 ¥101.76/用户/月"]
+    ["官方站点","<a class=\"ext\" href=\"https://azure.microsoft.com/en-us/pricing/details/virtual-desktop/\">Azure Virtual Desktop 定价页</a>","外部用户 $10/$5.50、BYOL 免许可费、中国区 ¥101.76/用户/月"],
+    ["官方文档","<a class=\"ext\" href=\"https://learn.microsoft.com/en-us/azure/virtual-desktop/\">Azure Virtual Desktop 文档</a>","许可与部署方式说明"]
   ]},
   {p:"Microsoft Windows 365", items:[
     ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-us/windows-365\">Windows 365 产品页</a>","Enterprise/Business 档位与定位"],
     ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-us/windows-365/all-pricing\">Windows 365 全部定价</a>","$28.00 起、Business Standard $41.00 / Premium $66.00、$255.20 顶配"],
-    ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-gb/windows-365/enterprise/pricing\">Windows 365 Enterprise 定价（英国区）</a>","£24.30 等区域口径"]
+    ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-gb/windows-365\">Windows 365（英国区站点）</a>","区域定价口径与 Enterprise 档位说明"]
   ]},
   {p:"Microsoft Dev Box", items:[
     ["官方站点","<a class=\"ext\" href=\"https://azure.microsoft.com/en-us/pricing/details/dev-box/\">Azure Dev Box 定价页</a>","16vCPU/64GB/256GB $257.40、512GB $276.40、1TB $314.40"],
@@ -627,7 +630,8 @@ const SOURCES = [
     ["第三方评测","<a class=\"ext\" href=\"https://www.trustradius.com/products/vmware-horizon/pricing\">TrustRadius：Horizon 定价</a>","Universal $12.50/用户/月及各档位价格"]
   ]},
   {p:"Parallels RAS", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://www.parallels.com/products/ras/\">Parallels RAS 产品页</a>","14 天试用、并发用户授权、多云部署"]
+    ["官方站点","<a class=\"ext\" href=\"https://www.parallels.com/products/ras/\">Parallels RAS 产品页</a>","14 天试用、并发用户授权、多云部署"],
+    ["官方站点","<a class=\"ext\" href=\"https://parallels.com/ras/\">Parallels RAS 官方页（许可起价）</a>","$120/并发用户、最少 15 并发"]
   ]},
   {p:"Paperspace（DigitalOcean）", items:[
     ["官方站点","<a class=\"ext\" href=\"https://www.paperspace.com/pricing\">Paperspace 定价页</a>","GPU+ $0.45/小时、P4000 $0.51/小时、P5000 $0.78/小时"],
@@ -635,18 +639,18 @@ const SOURCES = [
   ]},
   {p:"Shadow PC", items:[
     ["官方站点","<a class=\"ext\" href=\"https://shadow.tech/\">Shadow PC 官网</a>","Neo/Power 档位、可自由安装软件"],
-    ["科技媒体","<a class=\"ext\" href=\"https://www.frandroid.com/marques/shadow/1885379_shadow-pc-les-abonnements-augmentent-encore-de-prix\">Frandroid：Shadow PC 订阅价格</a>","Lite 低至 €19.49/月、档位价格"]
+    ["科技媒体","<a class=\"ext\" href=\"https://cloudbase.gg/news/shadow-pc-lite-a-real-cloud-pc-starting-at-e19-49-month/\">cloudbase：Shadow PC Lite 与档位价格</a>","Lite 低至 €19.49/月、Neo €32.99 / Power €49.99"]
   ]},
   {p:"V2 Cloud", items:[
     ["官方站点","<a class=\"ext\" href=\"https://v2cloud.com/pricing/\">V2 Cloud 定价页</a>","Basic $35、Essential $40、Mid $60、Heavy $110、Power 另加 $240"],
     ["官方站点","<a class=\"ext\" href=\"https://v2cloud.com/\">V2 Cloud 官网</a>","免费试用与免费演示"]
   ]},
   {p:"Dizzion Frame（Dizzion DaaS）", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://www.dizzion.com/platform/\">Dizzion 平台页</a>","按桌面订阅、VM 部署在客户公有云"]
+    ["官方站点","<a class=\"ext\" href=\"https://www.dizzion.com/\">Dizzion 官网（Frame / DaaS 平台）</a>","按桌面订阅、VM 部署在客户公有云"]
   ]},
   {p:"airgpu", items:[
     ["官方站点","<a class=\"ext\" href=\"https://airgpu.com/\">airgpu 官网</a>","$0.65/小时起、Tesla T4 机型、24 个数据中心"],
-    ["第三方评测","<a class=\"ext\" href=\"https://www.rdpextra.com/cloud-pc-pricing/\">RDPExtra：云 PC 价格对照</a>","按小时单价与信用点口径"]
+    ["第三方评测","<a class=\"ext\" href=\"https://cloudloadout.com/cloud-gaming-services/\">Cloud Loadout：云 PC / 云游戏服务对照</a>","按小时单价 $0.65/小时与信用点口径"]
   ]},
   {p:"NVIDIA GeForce NOW", items:[
     ["官方站点","<a class=\"ext\" href=\"https://www.nvidia.com/en-us/geforce-now/\">GeForce NOW 官网</a>","Performance/Ultimate 档位、免费档"],
@@ -657,22 +661,23 @@ const SOURCES = [
     ["科技媒体","<a class=\"ext\" href=\"https://www.pcmag.com/news/boosteroid-cloud-gaming-price-increase\">PCMag：Boosteroid 调价</a>","2026-09-15 调价后的价格口径"]
   ]},
   {p:"Kasm Workspaces", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://kasm.com/pricing/\">Kasm 定价页</a>","Community 免费（5 并发）、Starter $10/用户、Enterprise $20/会话"],
-    ["官方站点","<a class=\"ext\" href=\"https://kasm.com/cloud/\">Kasm Cloud 定价</a>","Personal Cloud Desktop $20/月（200 小时）等"]
+    ["官方站点","<a class=\"ext\" href=\"https://kasm.com/community-edition\">Kasm Community Edition 与授权档位</a>","Community 免费（5 并发）、Starter $10/用户、Enterprise $20/会话"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.kasmweb.com/cloud-personal\">Kasm Cloud Personal 定价</a>","Cloud Desktop $20/月（200 小时）、$10/月（100 小时）"]
   ]},
   {p:"Workspot", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://www.workspot.com/pricing/\">Workspot 定价页</a>","按小时/月/年订阅、TCO $10–100/用户/月"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.workspot.com/\">Workspot 官网</a>","按小时/月/年订阅、TCO $10–100/用户/月"],
     ["第三方评测","<a class=\"ext\" href=\"https://www.gartner.com/reviews/market/desktop-as-a-service\">Gartner：DaaS 市场与议价区间</a>","$15–200/用户/月区间口径"]
   ]},
   {p:"Xbox Cloud Gaming（Game Pass Ultimate）", items:[
     ["官方站点","<a class=\"ext\" href=\"https://www.xbox.com/en-US/play\">Xbox Cloud Gaming 入口</a>","云游戏功能与多端支持"],
-    ["科技媒体","<a class=\"ext\" href=\"https://www.theverge.com/news/xbox-game-pass-ultimate-price-cloud-gaming-hours\">The Verge：Game Pass 改价与云游戏时长上限</a>","$22.99/月、2026-11 起 15/10/5 小时上限"]
+    ["官方站点","<a class=\"ext\" href=\"https://www.xbox.com/en-US/xbox-game-pass\">Xbox Game Pass 会员与云游戏说明</a>","$22.99/月、2026-11 起 15/10/5 小时上限"]
   ]},
   {p:"Vagon", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://vagon.io/pricing\">Vagon 定价页</a>","约 $0.99/小时起、按分钟计费的浏览器云工作站"]
+    ["官方站点","<a class=\"ext\" href=\"https://vagon.io/\">Vagon 官网</a>","约 $0.99/小时起、按分钟计费的浏览器云工作站"]
   ]},
   {p:"Blacknut", items:[
-    ["官方站点","<a class=\"ext\" href=\"https://www.blacknut.com/\">Blacknut 官网</a>","$15.99/月、家庭共享、1080p 上限"]
+    ["官方站点","<a class=\"ext\" href=\"https://www.blacknut.com/\">Blacknut 官网</a>","$15.99/月、家庭共享、1080p 上限"],
+    ["第三方评测","<a class=\"ext\" href=\"https://cloudloadout.com/cloud-gaming-101-everything-you-need-to-know-before-you-start/\">Cloud Loadout：云游戏服务价格与规格对照</a>","$15.99/月、家庭目录、1080p 口径"]
   ]}
 ];
 
