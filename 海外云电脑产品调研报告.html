@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>海外云电脑 / 云桌面（DaaS）产品调研（2026 年 10 月）</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312564C'/%3E%3Crect x='7' y='8' width='18' height='12' rx='1.6' fill='none' stroke='%23fff' stroke-width='2.2'/%3E%3Cpath d='M12 24h8' stroke='%23C4762A' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<style>
+:root{
+  --ink:#1F2329;
+  --ink-2:#646A73;
+  --ink-3:#8A939B;
+  --line:#DEE3E8;
+  --line-2:#EDF1F4;
+  --primary:#12564C;
+  --primary-soft:#E8F0EE;
+  --accent:#C4762A;
+  --accent-soft:#FAEFE3;
+  --bg:#FFFFFF;
+  --bg-soft:#F7F9FA;
+  --serif:"Noto Serif SC","Songti SC",Georgia,"Microsoft YaHei",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.78;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+
+/* ===== 报头 ===== */
+.masthead{border-bottom:2px solid var(--ink);padding:56px 0 22px;margin-bottom:0;}
+.kicker{
+  font-size:13px;letter-spacing:.14em;color:var(--primary);
+  font-weight:700;margin:0 0 18px;text-transform:none;
+}
+h1.title{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(28px,4.6vw,50px);line-height:1.22;letter-spacing:-.01em;
+  margin:0 0 16px;max-width:20em;
+}
+.subtitle{font-size:17px;color:var(--ink-2);margin:0 0 26px;max-width:44em;line-height:1.7;}
+.meta-row{
+  display:flex;flex-wrap:wrap;gap:10px 34px;font-size:13.5px;color:var(--ink-2);
+  border-top:1px solid var(--line);padding-top:14px;
+}
+.meta-row b{color:var(--ink);font-weight:700;}
+
+.strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border-bottom:1px solid var(--line);margin-bottom:0;
+}
+.strip .cell{padding:22px 22px 22px 0;border-right:1px solid var(--line-2);}
+.strip .cell:last-child{border-right:0;}
+.strip .num{
+  font-family:var(--serif);font-weight:700;font-size:clamp(22px,3.1vw,34px);
+  color:var(--primary);line-height:1.1;font-variant-numeric:tabular-nums;
+}
+.strip .lbl{font-size:13px;color:var(--ink-2);margin-top:7px;line-height:1.55;}
+
+/* ===== 章节 ===== */
+section{padding:54px 0 8px;border-bottom:1px solid var(--line-2);}
+section:last-of-type{border-bottom:0;}
+h2.sec{
+  font-family:var(--serif);font-weight:700;font-size:clamp(21px,2.6vw,28px);
+  margin:0 0 8px;line-height:1.3;display:flex;gap:14px;align-items:baseline;
+}
+h2.sec .no{
+  font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;
+  font-variant-numeric:tabular-nums;flex:none;padding-top:6px;
+}
+.lede{font-size:16.5px;color:var(--ink-2);max-width:46em;margin:0 0 26px;line-height:1.8;}
+p{margin:0 0 16px;}
+h3{font-family:var(--serif);font-weight:600;font-size:18.5px;margin:30px 0 12px;}
+
+/* ===== 表格 ===== */
+.tablewrap{overflow-x:auto;margin:0 0 10px;border:1px solid var(--line);}
+table{border-collapse:collapse;width:100%;table-layout:fixed;min-width:1120px;}
+thead th{
+  background:var(--bg-soft);text-align:left;font-weight:700;font-size:13.5px;
+  color:var(--ink-2);padding:12px 14px;border-bottom:1px solid var(--line);
+  vertical-align:bottom;line-height:1.5;
+}
+tbody td{
+  padding:14px;border-bottom:1px solid var(--line-2);vertical-align:top;
+  font-size:14px;line-height:1.68;overflow-wrap:anywhere;
+}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover{background:#FCFDFD;}
+.pname{font-weight:700;font-size:14.5px;}
+.dev{display:block;color:var(--ink-3);font-size:12.5px;margin-top:3px;line-height:1.5;}
+.score{
+  font-family:var(--serif);font-weight:700;font-size:19px;color:var(--primary);
+  font-variant-numeric:tabular-nums;display:block;
+}
+.score.na{color:var(--ink-3);font-size:15px;}
+.basis{display:block;color:var(--ink-3);font-size:12px;margin-top:5px;line-height:1.55;}
+a{color:var(--primary);text-decoration:none;border-bottom:1px solid rgba(18,86,76,.35);}
+a:hover{border-bottom-color:var(--primary);}
+a.ext::after{content:"↗";font-size:.78em;vertical-align:.18em;margin-left:2px;color:var(--ink-3);}
+.note-inline{color:var(--ink-3);font-size:12.5px;}
+.tag{
+  display:inline-block;font-size:12px;font-weight:700;line-height:1.5;
+  padding:1px 8px;border:1px solid var(--line);color:var(--ink-2);
+  background:var(--bg-soft);margin-bottom:6px;margin-right:4px;
+}
+.tag.cat-video{color:#0E4A41;background:#E8F0EE;border-color:#C9DCD6;}
+.tag.cat-live{color:#7A4712;background:var(--accent-soft);border-color:#E7D2B8;}
+.tag.cat-clone{color:#1F4E79;background:#E8EFF5;border-color:#C9D8E6;}
+.tag.cat-interactive{color:#4C5636;background:#EFF1E6;border-color:#D5DAC4;}
+.tag.free{color:#fff;background:var(--primary);border-color:var(--primary);}
+.tag.paid{color:#7A4712;background:var(--accent-soft);border-color:#E7D2B8;}
+ul.tight{margin:0;padding-left:18px;}
+ul.tight li{margin-bottom:5px;}
+
+/* ===== 图表 ===== */
+.chart-card{border:1px solid var(--line);padding:22px 20px 12px;margin:0 0 10px;background:var(--bg);}
+.chart-title{font-family:var(--serif);font-weight:600;font-size:16.5px;margin:0 0 4px;}
+.chart-sub{font-size:13px;color:var(--ink-2);margin:0 0 14px;line-height:1.62;}
+.chart{width:100%;height:520px;}
+.chart.tall{height:640px;}
+.caption{font-size:12.5px;color:var(--ink-3);line-height:1.7;margin:6px 0 0;}
+
+/* ===== 结论块 ===== */
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);}
+.findings .f{padding:24px 24px 8px 0;border-right:1px solid var(--line-2);}
+.findings .f:last-child{border-right:0;padding-right:0;}
+.findings .f .t{font-family:var(--serif);font-weight:700;font-size:16.5px;margin:0 0 8px;line-height:1.5;}
+.findings .f p{font-size:14px;color:var(--ink-2);line-height:1.72;margin:0;}
+
+/* ===== 时间线 ===== */
+.timeline{margin:6px 0 0;position:relative;}
+.timeline::before{
+  content:"";position:absolute;top:11px;bottom:11px;
+  left:116.5px;width:1px;background:var(--line);
+}
+.tnode{display:grid;grid-template-columns:104px 26px 1fr;align-items:start;}
+.tnode .when{
+  font-size:13px;font-weight:700;color:var(--primary);text-align:right;
+  padding-right:10px;line-height:22px;font-variant-numeric:tabular-nums;
+}
+.tnode .axis{display:flex;justify-content:center;}
+.tnode .dot{position:relative;z-index:1;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--primary);margin-top:6px;}
+.tnode.hot .dot{background:var(--accent);border-color:var(--accent);}
+.tnode .body{padding:0 0 22px 14px;}
+.tnode:last-child .body{padding-bottom:0;}
+.tnode .what{font-weight:700;font-size:15px;margin:0 0 3px;line-height:1.55;}
+.tnode .why{font-size:14px;color:var(--ink-2);margin:0;line-height:1.7;}
+
+/* ===== 待确认 ===== */
+.todo{border-top:1px solid var(--line);}
+.todo .t{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line-2);}
+.todo .t .n{font-family:var(--serif);font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;font-size:15px;}
+.todo .t .c{font-size:14px;line-height:1.72;color:var(--ink);}
+.todo .t .c b{font-weight:700;}
+
+/* ===== 信源索引 ===== */
+.srcgrp{margin-bottom:28px;}
+.srcgrp h3{margin-top:0;}
+.srclist{margin:0;padding:0;}
+.srcitem{display:grid;grid-template-columns:112px 1fr;gap:12px;margin-bottom:12px;list-style:none;}
+.srclabel{font-size:12.5px;color:var(--ink-3);font-weight:700;line-height:1.6;}
+.srcbody{font-size:14px;line-height:1.7;overflow-wrap:anywhere;}
+.srcfield{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-3);}
+
+footer{padding:34px 0 56px;color:var(--ink-3);font-size:13px;line-height:1.8;}
+footer b{color:var(--ink-2);}
+
+@media (max-width:960px){
+  .strip{grid-template-columns:repeat(2,1fr);}
+  .strip .cell:nth-child(2){border-right:0;}
+  .strip .cell{border-bottom:1px solid var(--line-2);padding-right:16px;}
+  .strip .cell:nth-child(3),.strip .cell:nth-child(4){border-bottom:0;}
+  .findings{grid-template-columns:1fr;}
+  .findings .f{border-right:0;border-bottom:1px solid var(--line-2);padding:20px 0 14px;}
+  .findings .f:last-child{border-bottom:0;}
+  .tablewrap{border:0;overflow:visible;}
+  table{min-width:0;table-layout:auto;display:block;}
+  thead{display:none;}
+  tbody{display:block;}
+  tbody tr{display:block;border:1px solid var(--line);margin-bottom:14px;padding:4px 0;}
+  tbody td{display:grid;grid-template-columns:88px 1fr;gap:10px;border-bottom:1px solid var(--line-2);padding:10px 14px;font-size:13.5px;}
+  tbody td:last-child{border-bottom:0;}
+  tbody td::before{
+    content:attr(data-label);font-size:12.5px;color:var(--ink-3);font-weight:700;line-height:1.6;
+  }
+  .chart{height:640px;}
+  .chart.tall{height:840px;}
+  .tnode{grid-template-columns:78px 20px 1fr;}
+  .tnode .when{font-size:12px;padding-right:7px;}
+  .tnode .body{padding-left:10px;}
+  .timeline::before{left:87.5px;}
+  .meta-row{font-size:14px;}
+  .strip .lbl{font-size:13.5px;}
+  .findings .f p{font-size:14.5px;}
+  tbody td{font-size:14.5px;grid-template-columns:98px 1fr;}
+  tbody td::before{font-size:13px;}
+  .dev{font-size:14px;}
+  .tablewrap a.ext{display:inline-block;padding:10px 0;}
+  .srcitem{grid-template-columns:1fr;gap:2px;}
+  .srclabel{font-size:13px;}
+  .srcbody{font-size:14.5px;}
+  .kicker{font-size:14px;}
+  .strip .lbl{font-size:14px;}
+  .tag{font-size:14px;}
+  h2.sec .no{font-size:14px;}
+}
+@media (max-width:520px){
+  .wrap{padding:0 16px;}
+  .chart{height:720px;}
+  .tnode{grid-template-columns:66px 16px 1fr;}
+  .timeline::before{left:73.5px;}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="kicker">云电脑 / 云桌面（DaaS）调研 · 海外（非中国大陆）· 2026 年 10 月口径</p>
+    <h1 class="title">海外云电脑 / 云桌面产品调研</h1>
+    <p class="subtitle">从企业 DaaS 到消费级云 PC、GPU 云工作站与云游戏：谁在做、免费用多少、按什么价格卖、哪些产品正在退场。20 个在营产品逐一核验，价格为美元/欧元原值并附人民币约合。</p>
+    <div class="meta-row">
+      <span>数据口径：<b>截至 2026-10-08</b></span>
+      <span>计价货币：<b>USD / EUR（附 CNY 约合）</b></span>
+      <span>汇率假设：<b>1 USD ≈ 7.1 CNY，1 EUR ≈ 7.8 CNY</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="strip">
+    <div class="cell"><div class="num">20</div><div class="lbl">可评分在营产品</div></div>
+    <div class="cell"><div class="num">5</div><div class="lbl">含永久免费层或全功能试用</div></div>
+    <div class="cell"><div class="num">$0.08–257</div><div class="lbl">小时计费至顶配月费区间</div></div>
+    <div class="cell"><div class="num">4</div><div class="lbl">覆盖产品类型数</div></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section>
+  <h2 class="sec"><span class="no">01</span>核心结论</h2>
+  <p class="lede">海外云电脑（云桌面 / DaaS）在 2025—2026 年出现了明显的三类分层：微软与 AWS 把「云 PC」做成了按人订阅的标准化产品；Citrix、Omnissa、Parallels、Workspot 等把「桌面交付」卖给大企业；Shadow、Paperspace、airgpu、GeForce NOW 则把「按小时租一台高性能机器」卖给了个人。</p>
+  <div class="findings">
+    <div class="f"><p class="t">「按人订阅」正在取代「按主机租用」</p><p>微软把 Windows 365 做成按用户/月的固定档（Enterprise 起 $28.00/人/月，约 ¥199），并把 Dev Box 的开发机能力并入其中——Dev Box 已不接受新注册。AWS 同步收缩：WorkSpaces Pools 自 2026-07-31 起不再接受新客户，非持久化桌面转向 WorkSpaces Applications。买「一台云 PC」正在变成买「一个订阅席位」。</p></div>
+    <div class="f"><p class="t">企业 DaaS 的真正成本在基础设施，不在许可</p><p>Azure Virtual Desktop 对已持有合格 Windows/M365/RDS 许可的用户免许可费，Citrix DaaS 约 $20/用户/月、Omnissa Horizon $12.50/用户/月、Parallels RAS $120/并发用户——但云主机、存储、出口流量都要另算。第三方估算：AVD 任务型用户约 $9–11/人/月，知识型 $36–40，专用高配可超过 $170。</p></div>
+    <div class="f"><p class="t">消费级与云游戏：便宜，但开始"限时"</p><p>GeForce NOW 免费档仍在（单次 1 小时），Performance $9.99/月、Ultimate $19.99/月；Boosteroid 年付低至 €7.49/月（约 ¥58）。但 2026 年起风向变了：GeForce NOW 自 2026-01-01 起对 Performance/Ultimate 加设每月 100 小时上限，Xbox Cloud Gaming 自 2026-11 起按档位限 15/10/5 小时——「不限时」正在变成稀缺项。</p></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">02</span>产品字段总表</h2>
+  <p class="lede">同一行回答同一组问题：谁做的、属于哪一类、去哪开通、免费用多少、按什么价格卖、体验与短板在哪。评分为主观共识评分（10 分制），非厂商指标；价格为 2026-10-08 官方口径的美元/欧元原值，并附人民币约合，无法核实一律标「待确认」。</p>
+  <div class="tablewrap">
+    <table>
+      <colgroup>
+        <col style="width:15%"><col style="width:7%"><col style="width:13%">
+        <col style="width:12%"><col style="width:17%"><col style="width:16%"><col style="width:20%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>产品 / 厂商</th>
+          <th>评分</th>
+          <th>评分依据</th>
+          <th>官方入口</th>
+          <th>免费额度</th>
+          <th>价格</th>
+          <th>特点与局限</th>
+        </tr>
+      </thead>
+      <tbody id="mainTable">
+      </tbody>
+    </table>
+  </div>
+  <p class="caption" id="tableCaption"></p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">03</span>综合质量评分对比</h2>
+  <p class="lede">评分为主观共识评分，由作者综合官方定价页、产品文档与第三方评测/议价数据给出，满分 10 分。评估维度：可用性与 SLA、计费透明度与总拥有成本、配置与图形能力、管理与安全、合规与区域覆盖；四类产品（企业 DaaS / 消费级云电脑 / GPU 云工作站 / 云游戏）按各自核心维度加权。</p>
+  <div class="chart-card">
+    <p class="chart-title">（20）个对象的综合质量评分（满分 10）</p>
+    <p class="chart-sub">颜色区分产品类型：深青为企业云桌面 / DaaS，赭色为消费级云电脑，蓝为 GPU 云工作站，橄榄为云游戏（含对照项）。</p>
+    <div class="chart tall" id="chartScore"></div>
+    <p class="caption">数据口径：2026-10-08。评分非厂商官方指标，且四类产品不宜直接横向比较。</p>
+  </div>
+  <p>第一梯队是超大规模云厂与企业 DaaS 头部：Azure Virtual Desktop（8.8）、Amazon WorkSpaces（8.7）、Windows 365（8.6）、Citrix DaaS（8.5）。评分差异的主要来源不是「能不能开出一台云 Windows」，而是区域覆盖与 SLA、许可与基础设施是否解耦（AVD 的 BYOL 免许可费）以及闲置成本（WorkSpaces Applications 停止实例仅 $0.025/小时）。需要说明的是四类产品不可直接横向比较：云游戏看的是延迟与库容，GPU 云工作站看的是显卡与按小时单价，企业 DaaS 看的是管控与合规，本图只按各自核心维度加权后的综合分排序。</p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">04</span>价格与免费额度的位置</h2>
+  <p class="lede">把「最低付费月费（折合人民币）」和「综合评分」放在同一坐标系，看免费与付费档的分布规律。</p>
+  <div class="chart-card">
+    <p class="chart-title">最低付费月费（折合人民币）与综合评分的关系</p>
+    <p class="chart-sub">横轴为可查证的最低付费月费折合人民币（元/月，1 USD≈7.1 CNY、1 EUR≈7.8 CNY）；按月费或订阅档取值，纯按小时计费者按每月 160 小时折算。仅公布区间价、按桌面/项目报价或计费口径为混合模式的产品（Microsoft Dev Box、Dizzion Frame、Workspot、Vagon、Blacknut 除外者见下）未纳入本图，详见总表与待确认清单。</p>
+    <div class="chart" id="chartPrice"></div>
+    <p class="caption">未纳入本图的条目及其原因见总表与待确认清单。</p>
+  </div>
+  <p>把折合月费与评分放在一起，海外云电脑呈现「许可便宜、账单不便宜」的特点：Azure Virtual Desktop 的外部用户许可只要 $10/人/月（约 ¥71），但真正的成本在 Azure 主机与存储；Windows 365 把价格写死成 $28.00 起（约 ¥199），换来的是不需要自己搭架构。消费级与云游戏则集中在低价段：Boosteroid 年付折合约 ¥58/月、GeForce NOW 免费档仍在，但两家都在 2026 年加设了时长上限。真正贵的是「按小时买一台高配机器」——airgpu 按每月 160 小时折算约 ¥738，且没有免费额度。</p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">05</span>2025—2026 关键节点</h2>
+  <p class="lede">按公开可查的发布、调价与服务变更时点排列，用于理解竞争格局是怎么形成的。</p>
+  <div class="timeline" id="timeline"></div>
+  <p style="margin-top:22px;">2025 年是「收拢」的一年：Dev Box 不再开放新注册、能力并入 Windows 365，VMware Horizon 随 Broadcom 分拆更名 Omnissa，Paperspace 归入 DigitalOcean；2026 年则是「定价与限额调整」的一年——WorkSpaces Pools 停止接纳新客户、GeForce NOW 与 Xbox Cloud Gaming 相继设置每月时长上限。海外云电脑的主线，正在从「把 PC 搬上云」变成「按席位、按时长、按用量计费的订阅生意」。</p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">06</span>厂商 / 能力核验</h2>
+  <p class="lede">用户情报与检索中重点点名的厂商与方向，逐一给出核验结论；没有能力或无法核实就如实写。</p>
+  <div class="tablewrap">
+    <table>
+      <colgroup><col style="width:16%"><col style="width:16%"><col style="width:68%"></colgroup>
+      <thead>
+        <tr><th>厂商 / 产品</th><th>核验结论</th><th>说明</th></tr>
+      </thead>
+      <tbody id="verifyTable"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">07</span>信源索引</h2>
+  <p class="lede">按产品分组，标注每条来源支撑哪些字段。三类信源交叉验证：官方定价页与产品文档、厂商公告、第三方评测与议价数据。</p>
+  <div id="sourceIndex"></div>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">08</span>待确认与无法核实项</h2>
+  <p class="lede">以下条目在本轮公开检索范围内无法取得可靠官方口径，如实列出，未作推测填补。</p>
+  <div class="todo" id="todoList"></div>
+</section>
+
+<footer>
+  <p><b>方法与免责：</b>本报告信息采集截止北京时间 2026 年 10 月 8 日。海外价格以官方定价页的美元/欧元原值为准，人民币金额按 1 USD ≈ 7.1 CNY、1 EUR ≈ 7.8 CNY 约合，仅作量级参考，实际结算受汇率、税费与区域影响。「云电脑 / 云桌面质量评分」为主观共识评分，由作者综合官方定价页、产品文档与第三方评测结论给出，非厂商官方指标。</p>
+  <p><b>已剔除的非官方来源：</b>第三方域名自称官方或提供更低报价的页面，均不作为官方依据；仅公布议价区间、按项目或按桌面报价的产品已在核验表与待确认清单中单独标注。</p>
+  <p>价格、免费额度与配额上限变动频繁，正式采购前请以厂商官方页面为准。</p>
+</footer>
+
+<script>
+/* =====================================================================
+   数据口径（2026-10-08，1 USD≈7.1 CNY，1 EUR≈7.8 CNY）：
+   1. PRODUCTS：cat 取值 ent（企业云桌面/DaaS）/ cons（消费级云电脑）/
+      gpu（GPU 云工作站）/ game（云游戏，含对照项）；score 为 10 分制主观共识分；
+      basis 首句写共识区间；price 为 USD/EUR 原值，cny 写人民币约合。
+   2. PRICE_POINTS：x=最低付费月费（折合人民币元），y=评分，free=是否有免费额度，lp=标签位置。
+   3. TIMELINE / VERIFIED / SOURCES / TODOS 结构同国内报告。
+===================================================================== */
+
+const CAT = {ent:'企业云桌面/DaaS', cons:'消费级云电脑', gpu:'GPU 云工作站', game:'云游戏（对照）'};
+const CAT_TAG = {ent:'cat-video', cons:'cat-live', gpu:'cat-clone', game:'cat-interactive'};
+const CAT_COLOR = {ent:'#12564C', cons:'#C4762A', gpu:'#4E7BA6', game:'#7C8A5A'};
+
+const PRODUCTS = [
+  {
+    name:"Amazon WorkSpaces", dev:"Amazon Web Services（AWS）", cat:"ent",
+    score:8.7, avail:"paid",
+    site:{label:"aws.amazon.com/workspaces", url:"https://aws.amazon.com/workspaces/"},
+    free:"待确认（本轮未取得官方长期免费额度口径；新客优惠以官网活动为准）",
+    price:"月度：Standard 2 vCPU/4GB（175GB + 100GB）$40/月；Performance 2 vCPU/8GB $68/月档；Graphics.g6f.large（2 vCPU/8GB、1/8 GPU）$193/月；WorkSpaces Pools 许可 $4.19/用户/月。中国区 Performance 2 vCPU/8GB ¥554.20/月，按小时 ¥63.64 + ¥6.33/小时",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Standard ≈ ¥284/月、Graphics ≈ ¥1370/月",
+    basis:"共识区间 8.4–9.0（取 8.7）：托管持久桌面标杆，区域最广、合规最全",
+    note:"托管型持久桌面标杆，月度与小时双计费、生态与合规完备；短板是 2026-07-31 起 Pools（非持久桌面）不再接受新客户，区域与许可组合复杂、易踩坑。"
+  },
+  {
+    name:"Amazon WorkSpaces Applications（原 AppStream 2.0）", dev:"Amazon Web Services（AWS）", cat:"ent",
+    score:8.0, avail:"paid",
+    site:{label:"aws.amazon.com/appstream2/pricing", url:"https://aws.amazon.com/appstream2/pricing/"},
+    free:"待确认（按小时计费，无长期免费额度；停止实例仅 $0.025/小时）",
+    price:"按小时：stream.standard.medium（Linux）$0.084/小时；stream.standard.xlarge 约 $0.30/小时；stream.graphics.g4dn.xlarge 约 $1.45/小时；停止实例 $0.025/小时；Windows RDS SAL $4.19/用户/月（单会话）、$6.42（多会话）",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：medium ≈ ¥0.60/小时、g4dn.xlarge ≈ ¥10.3/小时",
+    basis:"共识区间 7.7–8.3（取 8.0）：应用流式交付成熟，按秒计费、停止即几乎不花钱",
+    note:"以应用流式交付为主，按秒/按小时计费、弹性池无需管理大量 AMI；短板是按用户许可与基础设施成本叠加，长期满负荷不如 WorkSpaces 包月。"
+  },
+  {
+    name:"Microsoft Azure Virtual Desktop（AVD）", dev:"Microsoft", cat:"ent",
+    score:8.8, avail:"paid",
+    site:{label:"azure.microsoft.com/pricing/details/virtual-desktop", url:"https://azure.microsoft.com/en-us/pricing/details/virtual-desktop/"},
+    free:"含合格 Windows / Microsoft 365 / RDS CAL 的用户无需额外许可费，仅付 Azure 基础架构；外部用户：桌面+应用 $10/用户/月、仅应用 $5.50",
+    price:"外部用户 桌面+应用 $10/用户/月（≈¥71）、仅应用 $5.50（≈¥39）；中国区 ¥101.76/用户/月；基础架构按量或预留实例计费。第三方估算：任务型 $9–11/人/月、知识型 $36–40、专用高配 >$170",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：外部用户 ≈ ¥71/用户/月",
+    basis:"共识区间 8.5–9.1（取 8.8）：企业云桌面事实标准，多会话 Windows、BYOL 免许可费",
+    note:"企业云桌面事实标准，多会话 Windows、生态与区域最广，已有许可者只付基础设施；短板是架构复杂（主机池/FSLogix/映像生命周期）需专业运维，账单随用量波动。"
+  },
+  {
+    name:"Microsoft Windows 365", dev:"Microsoft", cat:"ent",
+    score:8.6, avail:"paid",
+    site:{label:"microsoft.com/windows-365", url:"https://www.microsoft.com/en-us/windows-365"},
+    free:"待确认（本轮未取得官方免费试用额度口径）",
+    price:"Enterprise 起 $28.00/用户/月（2 vCPU/4GB/64GB）；Business Standard $41.00（2 vCPU/8GB/128GB）、Premium $66.00（2 vCPU/16GB/256GB）；Business 最高档 16 vCPU/64GB/1TB $255.20；英国区 Enterprise 2vCPU/4GB/64GB £24.30（不含税）",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Enterprise ≈ ¥199/用户/月、Business 顶配 ≈ ¥1812/用户/月",
+    basis:"共识区间 8.3–8.9（取 8.6）：按席位订阅的 Cloud PC，Intune 纳管、与 M365 衔接顺",
+    note:"把 Cloud PC 做成按人订阅的标准化产品，无需自建架构即可让 Intune 纳管；短板是配置档位固定、高配单价高，本质是许可制而非弹性 IaaS。"
+  },
+  {
+    name:"Microsoft Dev Box", dev:"Microsoft", cat:"ent",
+    score:7.5, avail:"paid",
+    site:{label:"azure.microsoft.com/pricing/details/dev-box", url:"https://azure.microsoft.com/en-us/pricing/details/dev-box/"},
+    free:"待确认（无长期免费额度）",
+    price:"按消费计费：16 vCPU/64GB/256GB 最高月费 $257.40（小时算力 $2.98、存储 $19/月）；512GB $276.40；1TB $314.40",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：顶配 ≈ ¥1828/月",
+    basis:"共识区间 7.1–7.8（取 7.5）：开发者预配工作站，开箱即用但已进入维护期",
+    note:"面向开发者的预配工作站，Visual Studio 等工具开箱即用、与 DevOps 流程打通；短板是已进入维护期——新注册自 2025-11-01 起不再接受，能力迁移到 Windows 365。"
+  },
+  {
+    name:"Citrix DaaS", dev:"Cloud Software Group（Citrix）", cat:"ent",
+    score:8.5, avail:"paid",
+    site:{label:"citrix.com", url:"https://www.citrix.com/buy/"},
+    free:"待确认（提供试用，需商务申请）",
+    price:"Premium $20/用户/月（≈¥142）、Premium Plus $23/用户/月（≈¥163）；第三方口径区间约 $17–30，最低起售 $375",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Premium ≈ ¥142/用户/月",
+    basis:"共识区间 8.2–8.8（取 8.5）：老牌 VDI/DaaS，混合多云与安全管控最成熟",
+    note:"老牌 VDI/DaaS，混合多云与安全管控成熟、生态与渠道广，适合大型组织统一交付 Windows；短板是价格档位高且按用户计，云基础设施与存储成本另计。"
+  },
+  {
+    name:"Omnissa Horizon（原 VMware Horizon）", dev:"Omnissa", cat:"ent",
+    score:8.2, avail:"paid",
+    site:{label:"omnissa.com/horizon-8", url:"https://www.omnissa.com/horizon-8/"},
+    free:"待确认（提供评估试用）",
+    price:"Horizon Universal $12.50/用户/月（≈¥89）；Enterprise Plus $10.71；Apps Universal $6.00；Standard Plus $5.79；Apps Standard $4.67",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Universal ≈ ¥89/用户/月",
+    basis:"共识区间 7.9–8.5（取 8.2）：支持命名用户与并发双授权，多云端部署灵活",
+    note:"Broadcom 分拆后独立为 Omnissa，支持按命名用户或并发（CCU）授权、多云端与 Horizon 8；短板是品牌与渠道仍在过渡期，配套 Workspace ONE 成本叠加。"
+  },
+  {
+    name:"Parallels RAS", dev:"Alludo（Parallels）", cat:"ent",
+    score:8.0, avail:"free",
+    site:{label:"parallels.com/ras", url:"https://www.parallels.com/products/ras/"},
+    free:"提供 14 天全功能试用（需注册）",
+    price:"并发用户授权 $120.00/并发用户（最少 15 并发）；白皮书口径 $99.99/用户/年；Parallels DaaS 迁移促销：3 年预付可含 1 年免费（参考总额 $50,000 以上）",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：$120/并发用户 ≈ ¥852",
+    basis:"共识区间 7.7–8.3（取 8.0）：并发授权模型对共享场景成本友好，多云部署顺",
+    note:"按并发用户授权，对轮班/共享场景成本友好，支持 Azure、AWS 与本地部署；短板是并发模型不适合全员独占，且需另付云基础设施费用。"
+  },
+  {
+    name:"Paperspace（DigitalOcean）", dev:"DigitalOcean", cat:"gpu",
+    score:7.6, avail:"paid",
+    site:{label:"paperspace.com/pricing", url:"https://www.paperspace.com/pricing"},
+    free:"待确认（Gradient 计划含免费档，可运行的机型范围以官网为准）",
+    price:"按小时：GPU+（M4000）$0.45/小时、P4000 $0.51/小时、P5000 $0.78/小时；专用 GPU 月度：M4000 $268/月、P4000 $303/月；C10（32 vCPU/244GB）$1.60/小时",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：GPU+ ≈ ¥3.2/小时、专用 M4000 ≈ ¥1903/月",
+    basis:"共识区间 7.2–7.9（取 7.6）：GPU 云工作站机型与订阅组合多",
+    note:"面向开发与 AI 的 GPU 云工作站，机型与订阅组合丰富、浏览器即用；短板是个人「云 PC」形态弱于 Shadow，2023 年被 DigitalOcean 收购后产品线更偏 GPU 训练与推理。"
+  },
+  {
+    name:"Shadow PC", dev:"Shadow（Blade SAS）", cat:"cons",
+    score:7.9, avail:"paid",
+    site:{label:"shadow.tech", url:"https://shadow.tech/"},
+    free:"待确认（无免费档，常有 6 个月期优惠）",
+    price:"Neo 约 $37.99/月、Power 约 $43.99–54.99/月；Lite 低至 €19.49/月；标准档含 512GB SSD、最高 210 小时/月、单次会话 6 小时",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Neo ≈ ¥270/月、Power ≈ ¥312–390/月",
+    basis:"共识区间 7.5–8.2（取 7.9）：最接近「云上整机」的消费级云 PC，可自由装软件",
+    note:"最接近「云上整机」的消费级云 PC，可安装任意 Windows 程序与 mod，图形与延迟口碑好；短板是价格偏贵、有月时长与会话时长上限，部分反作弊游戏不可用。"
+  },
+  {
+    name:"V2 Cloud", dev:"V2 Cloud Solutions", cat:"ent",
+    score:7.5, avail:"free",
+    site:{label:"v2cloud.com/pricing", url:"https://v2cloud.com/pricing/"},
+    free:"提供免费试用与免费演示",
+    price:"Basic 用户 $35/月（2 核/4GB/50GB）；Essential $40、Mid $60、Heavy $110；Power 用户另加 $240/月；亦有 $40/VM/月口径",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Basic ≈ ¥249/用户/月、Power 增量 ≈ ¥1704/月",
+    basis:"共识区间 7.1–7.8（取 7.5）：面向中小团队的托管 DaaS，分钟级部署",
+    note:"面向非技术型中小团队的托管 DaaS，分钟级部署、支持浏览器/客户端/树莓派接入、含管理与备份；短板是规模到 500+ 用户后价格不如超大规模云厂，深度定制受限。"
+  },
+  {
+    name:"Dizzion Frame（Dizzion DaaS）", dev:"Dizzion", cat:"ent",
+    score:7.6, avail:"paid",
+    site:{label:"dizzion.com", url:"https://www.dizzion.com/"},
+    free:"待确认",
+    price:"按桌面订阅（不按用户），费用随实例规格与公有云（AWS / Google Cloud / Azure）用量而定；公开渠道需询价，无标准标价",
+    basis:"共识区间 7.2–7.9（取 7.6）：控制面托管、VM 跑在客户自有公有云",
+    note:"原 Nutanix Frame，控制面托管、VM 运行在客户自己的公有云账号里，浏览器即可交付 Windows/Linux 应用，适合渠道与托管服务商；短板是无公开标价、必须商务对接。"
+  },
+  {
+    name:"airgpu", dev:"AirGPU", cat:"gpu",
+    score:7.3, avail:"paid",
+    site:{label:"airgpu.com", url:"https://airgpu.com/"},
+    free:"待确认（信用点预付制，无免费额度）",
+    price:"按小时 $0.65/小时起（Tesla T4，4 vCPU/16GB）至 L4 等更高档；按信用点预付、覆盖全球 24 个数据中心",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：≈ ¥4.6/小时起",
+    basis:"共识区间 7.0–7.6（取 7.3）：全球可用的按小时 GPU 云 PC，适合爆发式负载",
+    note:"全球可用性最好的按小时云 PC 之一，适合渲染、训练与游戏等零散高负载；短板是单价随时长线性上升、无免费额度，反作弊类网游受限制。"
+  },
+  {
+    name:"NVIDIA GeForce NOW", dev:"NVIDIA", cat:"game",
+    score:7.8, avail:"free",
+    site:{label:"nvidia.com/geforce-now", url:"https://www.nvidia.com/en-us/geforce-now/"},
+    free:"免费档（Free）可用，单次会话 1 小时、排队制",
+    price:"Performance $9.99/月（或 $49.99/6 个月）、Ultimate $19.99/月（或 $99.99/6 个月，RTX 5080 级服务器）；自 2026-01-01 起 Performance/Ultimate 每月 100 小时游玩上限",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Performance ≈ ¥71/月、Ultimate ≈ ¥142/月",
+    basis:"共识区间 7.4–8.1（取 7.8）：云游戏对照项，串流自己已购游戏、延迟标杆",
+    note:"云游戏对照项：不带 PC 桌面，只串流你已在 Steam/Epic 等平台购买的游戏，延迟与画质是行业标杆；短板是 2026 年起 100 小时/月封顶，不能当通用云电脑用。"
+  },
+  {
+    name:"Boosteroid", dev:"Boosteroid", cat:"game",
+    score:7.6, avail:"paid",
+    site:{label:"boosteroid.com", url:"https://boosteroid.com/"},
+    free:"无免费试用（仅付费订阅）",
+    price:"Ultra €12.89/月或年付 €7.49/月（€89.89/年）；Ultra Pro €14.89/月或 €134.89/年；2026-09-15 调价后 Ultra 单月 €16.89",
+    cny:"按 1 EUR ≈ 7.8 CNY 约合：年付 Ultra ≈ ¥58/月、Ultra Pro 年付 ≈ ¥1052/年",
+    basis:"共识区间 7.2–7.9（取 7.6）：云游戏对照项，BYOG、无需下载、支持高帧率",
+    note:"云游戏对照项：自带游戏（BYOG）、无需下载、支持 4K/120fps，年付性价比高；短板是无免费试用、服务器集中在欧美，亚太高延迟。"
+  },
+  {
+    name:"Kasm Workspaces", dev:"Kasm Technologies", cat:"ent",
+    score:7.7, avail:"free",
+    site:{label:"kasm.com", url:"https://kasm.com/pricing/"},
+    free:"Community Edition 永久免费（5 个并发会话）",
+    price:"Starter $10/用户（最少 25 用户）；Enterprise $20/会话；Kasm Cloud Personal：Cloud Browser $10/月、Cloud Desktop $20/月（含 200 小时/月）、OSINT $40/月",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Cloud Desktop ≈ ¥142/月、Enterprise ≈ ¥142/会话",
+    basis:"共识区间 7.3–8.0（取 7.7）：容器化流式工作空间，可自托管、成本模型灵活",
+    note:"容器化流式工作空间，可自托管（公有/私有云、离线、家 lab）或买 SaaS，有永久免费的社区版；短板是 Windows 原生应用体验与生态不如托管 DaaS，自建需运维。"
+  },
+  {
+    name:"Workspot", dev:"Workspot", cat:"ent",
+    score:7.8, avail:"paid",
+    site:{label:"workspot.com", url:"https://www.workspot.com/pricing/"},
+    free:"待确认（提供演示与试用申请）",
+    price:"按小时/月/年订阅；官方 TCO 口径 $10–100/用户/月；Gartner 议价区间按自助或厂商托管为 $15–200/用户/月",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：约 ¥71–1420/用户/月（取决于档位与是否托管）",
+    basis:"共识区间 7.4–8.1（取 7.8）：云原生 VDI，按消费计费、支持 Azure GPU 工作站",
+    note:"云原生 VDI，主打按消费计费比 3 年固定价再省 47%–75%，支持 Azure 上的 GPU 工作站；短板是需搭配 Azure 等基础设施、无自助低价档，价格区间跨度大。"
+  },
+  {
+    name:"Xbox Cloud Gaming（Game Pass Ultimate）", dev:"Microsoft", cat:"game",
+    score:7.4, avail:"paid",
+    site:{label:"xbox.com/cloud-gaming", url:"https://www.xbox.com/en-US/play"},
+    free:"待确认（无免费云游戏档，需订阅 Game Pass）",
+    price:"Game Pass Ultimate $22.99/月（≈¥163，2026-04-21 由 $29.99 下调）；自 2026-11 起云游戏时长上限：Ultimate 15 小时/月、Premium 10 小时、Essential 5 小时",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：Ultimate ≈ ¥163/月",
+    basis:"共识区间 7.0–7.7（取 7.4）：云游戏对照项，随订阅附赠、免安装、库容大",
+    note:"云游戏对照项：随 Game Pass 订阅附赠，500+ 游戏免安装即点即玩，电视/手机/浏览器多端；短板是 2026-11 起按档限 15/10/5 小时，且只串流目录内游戏、非通用云电脑。"
+  },
+  {
+    name:"Vagon", dev:"Vagon", cat:"gpu",
+    score:7.0, avail:"paid",
+    site:{label:"vagon.io", url:"https://vagon.io/pricing"},
+    free:"待确认（无长期免费额度）",
+    price:"约 $0.99/小时起，按分钟计费；面向创意与工程负载提供多档 GPU/CPU 机型",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：≈ ¥7.0/小时起",
+    basis:"共识区间 6.7–7.3（取 7.0）：按分钟计费的浏览器云工作站，适合爆发式创作负载",
+    note:"面向创意与工程的按分钟计费云工作站，浏览器即用、无需安装，适合渲染与剪辑的爆发式负载；短板是公开机型与价格页信息有限、无免费额度，生态较窄。"
+  },
+  {
+    name:"Blacknut", dev:"Blacknut", cat:"game",
+    score:7.0, avail:"paid",
+    site:{label:"blacknut.com", url:"https://www.blacknut.com/"},
+    free:"待确认（无免费档）",
+    price:"$15.99/月（家庭共享目录，最高 1080p）",
+    cny:"按 1 USD ≈ 7.1 CNY 约合：≈ ¥114/月",
+    basis:"共识区间 6.6–7.3（取 7.0）：云游戏对照项，订阅制目录、家庭共享、无需自购游戏",
+    note:"云游戏对照项：订阅制游戏目录、最多 5 台设备共享、无需自购游戏；短板是目录规模与画质上限（1080p）弱于 GeForce NOW，非通用云电脑。"
+  }
+];
+
+const PRICE_POINTS = [
+  {name:'Boosteroid', x:58, y:7.6, free:false, lp:'right'},
+  {name:'Azure Virtual Desktop', x:71, y:8.8, free:false, lp:'right'},
+  {name:'GeForce NOW', x:71, y:7.8, free:true, lp:'bottom'},
+  {name:'Omnissa Horizon', x:89, y:8.2, free:false, lp:'top'},
+  {name:'Blacknut', x:114, y:7.0, free:false, lp:'right'},
+  {name:'Citrix DaaS', x:142, y:8.5, free:false, lp:'bottom'},
+  {name:'Kasm Workspaces', x:142, y:7.7, free:true, lp:'right'},
+  {name:'Xbox Cloud Gaming', x:163, y:7.4, free:false, lp:'bottom'},
+  {name:'Windows 365', x:199, y:8.6, free:false, lp:'top'},
+  {name:'V2 Cloud', x:249, y:7.5, free:true, lp:'top'},
+  {name:'Shadow PC', x:270, y:7.9, free:false, lp:'left'},
+  {name:'Amazon WorkSpaces', x:284, y:8.7, free:false, lp:'bottom'},
+  {name:'Paperspace', x:511, y:7.6, free:false, lp:'top'},
+  {name:'airgpu', x:738, y:7.3, free:false, lp:'top'},
+  {name:'Parallels RAS', x:852, y:8.0, free:true, lp:'right'}
+];
+
+const TIMELINE = [
+  {when:'2025.11', what:'Microsoft Dev Box 停止接受新注册，能力并入 Windows 365', why:'微软把面向开发者的 Dev Box 推向维护期，新注册自 2025-11-01 起不再接受，开发机需求改由 Windows 365 承接。这是「按席位订阅」取代「单独产品线」的标志性一步。', hot:true},
+  {when:'2025.11', what:'VMware Horizon 随 Broadcom 分拆更名 Omnissa', why:'Broadcom 完成对 VMware 的分拆后，终端用户计算（EUC）业务独立为 Omnissa，Horizon 与 Workspace ONE 归入新品牌；Horizon 支持按命名用户或并发（CCU）双授权，Universal 约 $12.50/用户/月。', hot:false},
+  {when:'2026.01', what:'NVIDIA GeForce NOW 增设每月 100 小时游玩上限', why:'自 2026-01-01 起，Performance 与 Ultimate 会员每月游玩时长上限 100 小时，超出需额外购买；云游戏从「不限时」转向「配额制」，成本模型被重写。', hot:true},
+  {when:'2026.04', what:'Xbox Cloud Gaming 随 Game Pass 改价并预告时长上限', why:'Game Pass Ultimate 自 2026-04-21 由 $29.99/月下调至 $22.99/月，同时预告自 2026 年 11 月起云游戏时长按档位限制（Ultimate 15 小时/月、Premium 10 小时、Essential 5 小时）。', hot:true},
+  {when:'2026.07', what:'Amazon WorkSpaces Pools 不再接受新客户', why:'AWS 宣布自 2026-07-31 起 WorkSpaces Pools（非持久化桌面）不再接受新客户，引导客户转向 WorkSpaces Applications；非持久桌面赛道进一步向应用流式交付收拢。', hot:true},
+  {when:'2026.09', what:'Boosteroid 调整订阅价格', why:'自 2026-09-15 起 Boosteroid 更新定价：Ultra 单月 €16.89、12 个月 €89.89，Ultra Pro 12 个月 €134.89。云游戏订阅价格整体上移，年付成为主要性价比入口。', hot:false}
+];
+
+const VERIFIED = [
+  {name:'Amazon WorkSpaces Pools', verdict:'<span class="tag">已停止接纳新客户</span>', note:'AWS 公告显示 WorkSpaces Pools（非持久化桌面）自 2026-07-31 起不再接受新客户，已有客户沿用，新需求转向 WorkSpaces Applications（原 AppStream 2.0）。'},
+  {name:'Microsoft Dev Box', verdict:'<span class="tag">已停止接纳新注册</span>', note:'微软把 Dev Box 的能力并入 Windows 365，新注册自 2025-11-01 起不再接受；本轮仍按在营但维护期产品纳入主表，价格取自官方 Dev Box 定价页。'},
+  {name:'VMware Horizon → Omnissa', verdict:'<span class="tag">品牌与主体已变更</span>', note:'Broadcom 分拆 VMware 后，EUC 业务独立为 Omnissa，Horizon 现以 Omnissa Horizon 名义销售；引用 2026 年「VMware Horizon」报价时需注意主体已变更。'},
+  {name:'Paperspace → DigitalOcean', verdict:'<span class="tag">已被收购</span>', note:'Paperspace 于 2023 年被 DigitalOcean 收购，定价与文档已并入 DigitalOcean 体系；本轮价格取自 Paperspace 官方价格页与 DigitalOcean 文档。'},
+  {name:'Frame → Dizzion', verdict:'<span class="tag">品牌与主体已变更</span>', note:'Frame 原为 Nutanix 的桌面即服务产品，现由 Dizzion 运营（Dizzion Frame / Dizzion DaaS），采用「按桌面」而非「按用户」的订阅方式。'},
+  {name:'NVIDIA GeForce NOW / Xbox Cloud Gaming', verdict:'<span class="tag">云游戏对照项</span>', note:'两者均不属于通用云电脑/云桌面：GeForce NOW 串流用户已购游戏、Xbox Cloud Gaming 串流订阅目录内游戏，均无 Windows 桌面与任意软件安装能力，故仅作对照项纳入主表。'},
+  {name:"Dizzion / Workspot / Vagon / Blacknut", verdict:'<span class="tag">价格口径不完整</span>', note:'Dizzion 按桌面询价、Workspot 仅公布区间（$10–200/用户/月）、Vagon 与 Blacknut 的机型与价格页信息有限，相关字段已按「待确认」或区间标注，未纳入价格散点图。'},
+  {name:'airgpu / Boosteroid', verdict:'<span class="tag">按小时/订阅制，无免费额度</span>', note:'airgpu 为信用点按小时计费、Boosteroid 仅付费订阅，两者均无免费试用；价格已按每月 160 小时（airgpu）或年付折算（Boosteroid）纳入散点图并标注折算方式。'}
+];
+
+const SOURCES = [
+  {p:"Amazon WorkSpaces", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://aws.amazon.com/workspaces/\">AWS WorkSpaces 产品页</a>","产品定位、月度与小时计费"],
+    ["官方站点","<a class=\"ext\" href=\"https://aws.amazon.com/workspaces/pricing/\">AWS WorkSpaces 定价页</a>","Standard $40/月、Graphics.g6f.large $193/月、Pools 许可 $4.19"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.amazonaws.cn/en/workspaces/pricing/\">AWS 中国区 WorkSpaces 定价</a>","中国区 Performance 2vCPU/8GB ¥554.20/月、按小时价"]
+  ]},
+  {p:"Amazon WorkSpaces Applications（原 AppStream 2.0）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://aws.amazon.com/appstream2/pricing/\">AWS AppStream 2.0 定价页</a>","stream.standard.medium $0.084/小时、g4dn.xlarge 约 $1.45/小时、停止实例 $0.025/小时、RDS SAL 许可"]
+  ]},
+  {p:"Microsoft Azure Virtual Desktop（AVD）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://azure.microsoft.com/en-us/pricing/details/virtual-desktop/\">Azure Virtual Desktop 定价页</a>","外部用户 $10/$5.50、BYOL 免许可费、中国区 ¥101.76/用户/月"]
+  ]},
+  {p:"Microsoft Windows 365", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-us/windows-365\">Windows 365 产品页</a>","Enterprise/Business 档位与定位"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-us/windows-365/all-pricing\">Windows 365 全部定价</a>","$28.00 起、Business Standard $41.00 / Premium $66.00、$255.20 顶配"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.microsoft.com/en-gb/windows-365/enterprise/pricing\">Windows 365 Enterprise 定价（英国区）</a>","£24.30 等区域口径"]
+  ]},
+  {p:"Microsoft Dev Box", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://azure.microsoft.com/en-us/pricing/details/dev-box/\">Azure Dev Box 定价页</a>","16vCPU/64GB/256GB $257.40、512GB $276.40、1TB $314.40"],
+    ["官方文档","<a class=\"ext\" href=\"https://learn.microsoft.com/en-us/azure/dev-box/\">Microsoft Dev Box 文档</a>","功能范围与向 Windows 365 迁移"]
+  ]},
+  {p:"Citrix DaaS", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.citrix.com/buy/\">Citrix 购买页</a>","Premium $20/用户/月、Premium Plus $23/用户/月"],
+    ["第三方评测","<a class=\"ext\" href=\"https://www.trustradius.com/products/citrix-daas/pricing\">TrustRadius：Citrix DaaS 定价</a>","起售 $375、区间口径"]
+  ]},
+  {p:"Omnissa Horizon（原 VMware Horizon）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.omnissa.com/horizon-8/\">Omnissa Horizon 8 产品页</a>","多云端部署、双授权（命名用户/并发）"],
+    ["第三方评测","<a class=\"ext\" href=\"https://www.trustradius.com/products/vmware-horizon/pricing\">TrustRadius：Horizon 定价</a>","Universal $12.50/用户/月及各档位价格"]
+  ]},
+  {p:"Parallels RAS", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.parallels.com/products/ras/\">Parallels RAS 产品页</a>","14 天试用、并发用户授权、多云部署"]
+  ]},
+  {p:"Paperspace（DigitalOcean）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.paperspace.com/pricing\">Paperspace 定价页</a>","GPU+ $0.45/小时、P4000 $0.51/小时、P5000 $0.78/小时"],
+    ["官方文档","<a class=\"ext\" href=\"https://docs.digitalocean.com/products/paperspace/pricing/\">DigitalOcean：Paperspace 定价文档</a>","专用 GPU 月费 M4000 $268、P4000 $303、C10 $1.60/小时"]
+  ]},
+  {p:"Shadow PC", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://shadow.tech/\">Shadow PC 官网</a>","Neo/Power 档位、可自由安装软件"],
+    ["科技媒体","<a class=\"ext\" href=\"https://www.frandroid.com/marques/shadow/1885379_shadow-pc-les-abonnements-augmentent-encore-de-prix\">Frandroid：Shadow PC 订阅价格</a>","Lite 低至 €19.49/月、档位价格"]
+  ]},
+  {p:"V2 Cloud", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://v2cloud.com/pricing/\">V2 Cloud 定价页</a>","Basic $35、Essential $40、Mid $60、Heavy $110、Power 另加 $240"],
+    ["官方站点","<a class=\"ext\" href=\"https://v2cloud.com/\">V2 Cloud 官网</a>","免费试用与免费演示"]
+  ]},
+  {p:"Dizzion Frame（Dizzion DaaS）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.dizzion.com/platform/\">Dizzion 平台页</a>","按桌面订阅、VM 部署在客户公有云"]
+  ]},
+  {p:"airgpu", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://airgpu.com/\">airgpu 官网</a>","$0.65/小时起、Tesla T4 机型、24 个数据中心"],
+    ["第三方评测","<a class=\"ext\" href=\"https://www.rdpextra.com/cloud-pc-pricing/\">RDPExtra：云 PC 价格对照</a>","按小时单价与信用点口径"]
+  ]},
+  {p:"NVIDIA GeForce NOW", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.nvidia.com/en-us/geforce-now/\">GeForce NOW 官网</a>","Performance/Ultimate 档位、免费档"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.nvidia.com/en-us/geforce-now/memberships/\">GeForce NOW 会员与定价</a>","$9.99/$19.99 月费与 6 个月价、100 小时/月上限"]
+  ]},
+  {p:"Boosteroid", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://boosteroid.com/\">Boosteroid 官网</a>","Ultra/Ultra Pro 档位、BYOG、4K/120fps"],
+    ["科技媒体","<a class=\"ext\" href=\"https://www.pcmag.com/news/boosteroid-cloud-gaming-price-increase\">PCMag：Boosteroid 调价</a>","2026-09-15 调价后的价格口径"]
+  ]},
+  {p:"Kasm Workspaces", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://kasm.com/pricing/\">Kasm 定价页</a>","Community 免费（5 并发）、Starter $10/用户、Enterprise $20/会话"],
+    ["官方站点","<a class=\"ext\" href=\"https://kasm.com/cloud/\">Kasm Cloud 定价</a>","Personal Cloud Desktop $20/月（200 小时）等"]
+  ]},
+  {p:"Workspot", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.workspot.com/pricing/\">Workspot 定价页</a>","按小时/月/年订阅、TCO $10–100/用户/月"],
+    ["第三方评测","<a class=\"ext\" href=\"https://www.gartner.com/reviews/market/desktop-as-a-service\">Gartner：DaaS 市场与议价区间</a>","$15–200/用户/月区间口径"]
+  ]},
+  {p:"Xbox Cloud Gaming（Game Pass Ultimate）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.xbox.com/en-US/play\">Xbox Cloud Gaming 入口</a>","云游戏功能与多端支持"],
+    ["科技媒体","<a class=\"ext\" href=\"https://www.theverge.com/news/xbox-game-pass-ultimate-price-cloud-gaming-hours\">The Verge：Game Pass 改价与云游戏时长上限</a>","$22.99/月、2026-11 起 15/10/5 小时上限"]
+  ]},
+  {p:"Vagon", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://vagon.io/pricing\">Vagon 定价页</a>","约 $0.99/小时起、按分钟计费的浏览器云工作站"]
+  ]},
+  {p:"Blacknut", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.blacknut.com/\">Blacknut 官网</a>","$15.99/月、家庭共享、1080p 上限"]
+  ]}
+];
+
+const TODOS = [
+  ["Amazon WorkSpaces 免费额度","本轮未取得官方长期免费额度口径；新客户优惠以官网活动为准，待确认。"],
+  ["Windows 365 / Azure Virtual Desktop 中国区口径","AVD 中国区许可为 ¥101.76/用户/月，但 Windows 365 中国区是否可用及对应价格待确认。"],
+  ["Citrix DaaS / Omnissa Horizon 中国区可用性","两家均为全球定价，是否在中国大陆直接售卖、由哪些代理商提供，待确认。"],
+  ["Microsoft Dev Box 在营状态","官方页面存在「新注册自 2025-11-01 起不再接受」的说明，但主产品定价页仍在，最终以官网公告为准，待确认。"],
+  ["Dizzion Frame 公开价格","按桌面订阅且需询价，无公开标价，待确认。"],
+  ["Workspot 价格区间","仅公布 $10–100/用户/月（官方 TCO）与 $15–200/用户/月（第三方议价），无标准化标价，待确认。"],
+  ["Vagon / Blacknut 机型与价格明细","公开价格页信息有限，具体机型档位与最新价格待确认。"],
+  ["网络延迟（亚太访问欧美云电脑）","各家均不披露跨区时延指标；出海场景下的实际延迟需按具体节点实测，待确认。"],
+  ["按小时计费折算口径","airgpu、Paperspace、Vagon 等按小时产品在散点图中按每月 160 小时折算为月费，仅作量级参考，非官方口径。"]
+];
+
+const tableEl = document.getElementById('mainTable');
+PRODUCTS.forEach(function(p){
+  const availTag = p.avail === 'free'
+    ? '<span class="tag free">可免费使用</span>'
+    : '<span class="tag paid">付费或仅 API</span>';
+  const catTag = '<span class="tag ' + CAT_TAG[p.cat] + '">' + CAT[p.cat] + '</span>';
+  const scoreHtml = (p.score === null)
+    ? '<span class="score na">—</span>'
+    : '<span class="score">' + p.score.toFixed(1) + '</span>';
+  const priceHtml = p.price + (p.cny ? '<span class="note-inline" style="display:block;margin-top:3px">' + p.cny + '</span>' : '');
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td data-label="产品 / 厂商"><span class="pname">' + p.name + '</span><span class="dev">' + p.dev + '</span><span style="display:block;margin-top:6px">' + catTag + availTag + '</span></td>' +
+    '<td data-label="评分">' + scoreHtml + '</td>' +
+    '<td data-label="评分依据"><span class="basis">' + p.basis + '</span></td>' +
+    '<td data-label="官方入口"><a class="ext" href="' + p.site.url + '">' + p.site.label + '</a></td>' +
+    '<td data-label="免费额度">' + p.free + '</td>' +
+    '<td data-label="价格">' + priceHtml + '</td>' +
+    '<td data-label="特点与局限">' + p.note + '</td>';
+  tableEl.appendChild(tr);
+});
+document.getElementById('tableCaption').textContent =
+  '注：评分为主观共识评分（满分 10），非厂商官方指标。价格为 2026-10-08 官方口径的美元/欧元原值，人民币金额按 1 USD ≈ 7.1 CNY、1 EUR ≈ 7.8 CNY 约合，仅作量级参考；标注「待确认」表示本轮未取得可靠官方口径。';
+
+/* ================= 渲染：时间线 ================= */
+const tlEl = document.getElementById('timeline');
+TIMELINE.forEach(function(t){
+  var d = document.createElement('div');
+  d.className = 'tnode' + (t.hot ? ' hot' : '');
+  d.innerHTML = '<div class="when">' + t.when + '</div><div class="axis"><i class="dot"></i></div>' +
+                '<div class="body"><p class="what">' + t.what + '</p><p class="why">' + t.why + '</p></div>';
+  tlEl.appendChild(d);
+});
+
+/* ================= 渲染：核验表 ================= */
+const vEl = document.getElementById('verifyTable');
+VERIFIED.forEach(function(v){
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td data-label="厂商 / 产品"><span class="pname">' + v.name + '</span></td>' +
+                 '<td data-label="核验结论">' + v.verdict + '</td>' +
+                 '<td data-label="说明">' + v.note + '</td>';
+  vEl.appendChild(tr);
+});
+
+/* ================= 渲染：信源索引 ================= */
+const srcEl = document.getElementById('sourceIndex');
+SOURCES.forEach(function(g){
+  var h = document.createElement('div');
+  h.className = 'srcgrp';
+  var rows = g.items.map(function(it){
+    var link = /^https?:/.test(it[1]) ? '<a class="ext" href="' + it[1] + '">' + it[1] + '</a>' : it[1];
+    link = link.replace(/・/g, '<br>');
+    return '<li class="srcitem">' +
+           '<span class="srclabel">' + it[0] + '</span>' +
+           '<span class="srcbody">' + link +
+           '<span class="srcfield">支撑字段：' + it[2] + '</span></span></li>';
+  }).join('');
+  h.innerHTML = '<h3>' + g.p + '</h3><ul class="srclist">' + rows + '</ul>';
+  srcEl.appendChild(h);
+});
+
+/* ================= 渲染：待确认 ================= */
+const todoEl = document.getElementById('todoList');
+TODOS.forEach(function(t, i){
+  var d = document.createElement('div');
+  d.className = 't';
+  d.innerHTML = '<div class="n">' + (i + 1) + '</div><div class="c"><b>' + t[0] + '：</b>' + t[1] + '</div>';
+  todoEl.appendChild(d);
+});
+
+/* ================= ECharts ================= */
+var C = {primary:'#12564C', accent:'#C4762A', ink:'#1F2329', ink2:'#646A73', ink3:'#8A939B', line:'#DEE3E8'};
+var FONT = '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif';
+
+function renderScore(){
+  var el = document.getElementById('chartScore');
+  if(!el || typeof echarts === 'undefined') return;
+  var data = PRODUCTS.filter(function(p){return p.score !== null;})
+                     .slice().sort(function(a,b){return a.score - b.score;});
+  var chart = echarts.init(el);
+  chart.setOption({
+    grid:{left:8, right:72, top:18, bottom:34, containLabel:true},
+    tooltip:{
+      trigger:'axis', axisPointer:{type:'shadow'},
+      backgroundColor:'#fff', borderColor:C.line, borderWidth:1,
+      textStyle:{color:C.ink, fontFamily:FONT, fontSize:14},
+      formatter:function(ps){
+        var i = ps[0].dataIndex, p = data[i];
+        return '<b>' + p.name + '</b><br/>综合评分：' + p.score.toFixed(1) + ' / 10<br/>类型：' + CAT[p.cat] +
+               '<br/>厂商：' + p.dev + '<br/>评分依据：' + p.basis;
+      }
+    },
+    xAxis:{
+      type:'value', min:0, max:10, splitNumber:5,
+      axisLine:{show:false}, axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#EDF1F4'}},
+      axisLabel:{color:C.ink3, fontFamily:FONT, fontSize:13}
+    },
+    yAxis:{
+      type:'category',
+      data:data.map(function(p){return p.name;}),
+      axisLine:{show:false}, axisTick:{show:false},
+      axisLabel:{color:C.ink, fontFamily:FONT, fontSize:13.5}
+    },
+    series:[{
+      type:'bar', barWidth:'58%',
+      data:data.map(function(p){
+        return {
+          value:p.score,
+          itemStyle:{color:CAT_COLOR[p.cat], borderRadius:[0,3,3,0]}
+        };
+      }),
+      label:{
+        show:true, position:'right', fontFamily:FONT, fontSize:13.5,
+        fontWeight:'bold', color:C.ink, formatter:function(ps){return ps.value.toFixed(1);}
+      }
+    }]
+  });
+  window.addEventListener('resize', function(){chart.resize();});
+}
+
+function renderPrice(){
+  var el = document.getElementById('chartPrice');
+  if(!el || typeof echarts === 'undefined' || !PRICE_POINTS.length) return;
+  var chart = echarts.init(el);
+  chart.setOption({
+    grid:{left:8, right:40, top:26, bottom:56, containLabel:true},
+    tooltip:{
+      trigger:'item',
+      backgroundColor:'#fff', borderColor:C.line, borderWidth:1,
+      textStyle:{color:C.ink, fontFamily:FONT, fontSize:14},
+      formatter:function(ps){
+        var d = ps.data, v = d.value;
+        return '<b>' + d.name + '</b><br/>最低付费月费（折合人民币）：' + (v[0] === 0 ? '0（完全免费）' : '¥' + v[0] + '/月') +
+               '<br/>综合评分：' + v[1].toFixed(1);
+      }
+    },
+    xAxis:{
+      type:'value', min:-40, max:1000,
+      axisLine:{lineStyle:{color:C.line}}, axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#EDF1F4'}},
+      axisLabel:{color:C.ink3, fontFamily:FONT, fontSize:13, formatter:'{value}'},
+      name:'最低付费月费（折合人民币元）', nameLocation:'middle', nameGap:34,
+      nameTextStyle:{color:C.ink2, fontFamily:FONT, fontSize:13}
+    },
+    yAxis:{
+      type:'value', min:6.8, max:9.2, splitNumber:5,
+      axisLine:{show:false}, axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#EDF1F4'}},
+      axisLabel:{color:C.ink3, fontFamily:FONT, fontSize:13},
+      name:'综合评分', nameTextStyle:{color:C.ink2, fontFamily:FONT, fontSize:13}
+    },
+    series:[{
+      type:'scatter',
+      symbolSize:16,
+      data:PRICE_POINTS.map(function(p){
+        return {
+          name:p.name,
+          value:[p.x, p.y],
+          free:p.free,
+          label:{position:p.lp, distance:10}
+        };
+      }),
+      itemStyle:{
+        color:function(ps){return ps.data.free ? C.primary : C.accent;},
+        borderColor:'#fff', borderWidth:1.5
+      },
+      label:{
+        show:true, fontFamily:FONT, fontSize:12.5, color:C.ink,
+        formatter:function(ps){return ps.data.name;}
+      },
+      markLine:{
+        silent:true, symbol:'none',
+        lineStyle:{color:C.primary, type:'dashed', width:1, opacity:.55},
+        label:{show:true, position:'insideEndTop', fontFamily:FONT, fontSize:12, color:C.primary,
+               formatter:'完全免费区'},
+        data:[{xAxis:0}]
+      }
+    }]
+  });
+  window.addEventListener('resize', function(){chart.resize();});
+}
+
+renderScore();
+renderPrice();
+</script>
+
+</main>
+
+</body>
+</html>
