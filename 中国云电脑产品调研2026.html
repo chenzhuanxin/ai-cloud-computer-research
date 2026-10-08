@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中国云电脑 / 云桌面产品调研（2026 年 10 月）</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2312564C'/%3E%3Crect x='7' y='8' width='18' height='12' rx='1.6' fill='none' stroke='%23fff' stroke-width='2.2'/%3E%3Cpath d='M12 24h8' stroke='%23C4762A' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<style>
+:root{
+  --ink:#1F2329;
+  --ink-2:#646A73;
+  --ink-3:#8A939B;
+  --line:#DEE3E8;
+  --line-2:#EDF1F4;
+  --primary:#12564C;
+  --primary-soft:#E8F0EE;
+  --accent:#C4762A;
+  --accent-soft:#FAEFE3;
+  --bg:#FFFFFF;
+  --bg-soft:#F7F9FA;
+  --serif:"Noto Serif SC","Songti SC",Georgia,"Microsoft YaHei",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.78;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+
+/* ===== 报头 ===== */
+.masthead{border-bottom:2px solid var(--ink);padding:56px 0 22px;margin-bottom:0;}
+.kicker{
+  font-size:13px;letter-spacing:.14em;color:var(--primary);
+  font-weight:700;margin:0 0 18px;text-transform:none;
+}
+h1.title{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(28px,4.6vw,50px);line-height:1.22;letter-spacing:-.01em;
+  margin:0 0 16px;max-width:20em;
+}
+.subtitle{font-size:17px;color:var(--ink-2);margin:0 0 26px;max-width:44em;line-height:1.7;}
+.meta-row{
+  display:flex;flex-wrap:wrap;gap:10px 34px;font-size:13.5px;color:var(--ink-2);
+  border-top:1px solid var(--line);padding-top:14px;
+}
+.meta-row b{color:var(--ink);font-weight:700;}
+
+.strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border-bottom:1px solid var(--line);margin-bottom:0;
+}
+.strip .cell{padding:22px 22px 22px 0;border-right:1px solid var(--line-2);}
+.strip .cell:last-child{border-right:0;}
+.strip .num{
+  font-family:var(--serif);font-weight:700;font-size:clamp(22px,3.1vw,34px);
+  color:var(--primary);line-height:1.1;font-variant-numeric:tabular-nums;
+}
+.strip .lbl{font-size:13px;color:var(--ink-2);margin-top:7px;line-height:1.55;}
+
+/* ===== 章节 ===== */
+section{padding:54px 0 8px;border-bottom:1px solid var(--line-2);}
+section:last-of-type{border-bottom:0;}
+h2.sec{
+  font-family:var(--serif);font-weight:700;font-size:clamp(21px,2.6vw,28px);
+  margin:0 0 8px;line-height:1.3;display:flex;gap:14px;align-items:baseline;
+}
+h2.sec .no{
+  font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;
+  font-variant-numeric:tabular-nums;flex:none;padding-top:6px;
+}
+.lede{font-size:16.5px;color:var(--ink-2);max-width:46em;margin:0 0 26px;line-height:1.8;}
+p{margin:0 0 16px;}
+h3{font-family:var(--serif);font-weight:600;font-size:18.5px;margin:30px 0 12px;}
+
+/* ===== 表格 ===== */
+.tablewrap{overflow-x:auto;margin:0 0 10px;border:1px solid var(--line);}
+table{border-collapse:collapse;width:100%;table-layout:fixed;min-width:1120px;}
+thead th{
+  background:var(--bg-soft);text-align:left;font-weight:700;font-size:13.5px;
+  color:var(--ink-2);padding:12px 14px;border-bottom:1px solid var(--line);
+  vertical-align:bottom;line-height:1.5;
+}
+tbody td{
+  padding:14px;border-bottom:1px solid var(--line-2);vertical-align:top;
+  font-size:14px;line-height:1.68;overflow-wrap:anywhere;
+}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:hover{background:#FCFDFD;}
+.pname{font-weight:700;font-size:14.5px;}
+.dev{display:block;color:var(--ink-3);font-size:12.5px;margin-top:3px;line-height:1.5;}
+.score{
+  font-family:var(--serif);font-weight:700;font-size:19px;color:var(--primary);
+  font-variant-numeric:tabular-nums;display:block;
+}
+.score.na{color:var(--ink-3);font-size:15px;}
+.basis{display:block;color:var(--ink-3);font-size:12px;margin-top:5px;line-height:1.55;}
+a{color:var(--primary);text-decoration:none;border-bottom:1px solid rgba(18,86,76,.35);}
+a:hover{border-bottom-color:var(--primary);}
+a.ext::after{content:"↗";font-size:.78em;vertical-align:.18em;margin-left:2px;color:var(--ink-3);}
+.note-inline{color:var(--ink-3);font-size:12.5px;}
+.tag{
+  display:inline-block;font-size:12px;font-weight:700;line-height:1.5;
+  padding:1px 8px;border:1px solid var(--line);color:var(--ink-2);
+  background:var(--bg-soft);margin-bottom:6px;margin-right:4px;
+}
+.tag.cat-video{color:#0E4A41;background:#E8F0EE;border-color:#C9DCD6;}
+.tag.cat-live{color:#7A4712;background:var(--accent-soft);border-color:#E7D2B8;}
+.tag.cat-clone{color:#1F4E79;background:#E8EFF5;border-color:#C9D8E6;}
+.tag.cat-interactive{color:#4C5636;background:#EFF1E6;border-color:#D5DAC4;}
+.tag.free{color:#fff;background:var(--primary);border-color:var(--primary);}
+.tag.paid{color:#7A4712;background:var(--accent-soft);border-color:#E7D2B8;}
+ul.tight{margin:0;padding-left:18px;}
+ul.tight li{margin-bottom:5px;}
+
+/* ===== 图表 ===== */
+.chart-card{border:1px solid var(--line);padding:22px 20px 12px;margin:0 0 10px;background:var(--bg);}
+.chart-title{font-family:var(--serif);font-weight:600;font-size:16.5px;margin:0 0 4px;}
+.chart-sub{font-size:13px;color:var(--ink-2);margin:0 0 14px;line-height:1.62;}
+.chart{width:100%;height:520px;}
+.chart.tall{height:640px;}
+.caption{font-size:12.5px;color:var(--ink-3);line-height:1.7;margin:6px 0 0;}
+
+/* ===== 结论块 ===== */
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);}
+.findings .f{padding:24px 24px 8px 0;border-right:1px solid var(--line-2);}
+.findings .f:last-child{border-right:0;padding-right:0;}
+.findings .f .t{font-family:var(--serif);font-weight:700;font-size:16.5px;margin:0 0 8px;line-height:1.5;}
+.findings .f p{font-size:14px;color:var(--ink-2);line-height:1.72;margin:0;}
+
+/* ===== 时间线 ===== */
+.timeline{margin:6px 0 0;position:relative;}
+.timeline::before{
+  content:"";position:absolute;top:11px;bottom:11px;
+  left:116.5px;width:1px;background:var(--line);
+}
+.tnode{display:grid;grid-template-columns:104px 26px 1fr;align-items:start;}
+.tnode .when{
+  font-size:13px;font-weight:700;color:var(--primary);text-align:right;
+  padding-right:10px;line-height:22px;font-variant-numeric:tabular-nums;
+}
+.tnode .axis{display:flex;justify-content:center;}
+.tnode .dot{position:relative;z-index:1;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--primary);margin-top:6px;}
+.tnode.hot .dot{background:var(--accent);border-color:var(--accent);}
+.tnode .body{padding:0 0 22px 14px;}
+.tnode:last-child .body{padding-bottom:0;}
+.tnode .what{font-weight:700;font-size:15px;margin:0 0 3px;line-height:1.55;}
+.tnode .why{font-size:14px;color:var(--ink-2);margin:0;line-height:1.7;}
+
+/* ===== 待确认 ===== */
+.todo{border-top:1px solid var(--line);}
+.todo .t{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line-2);}
+.todo .t .n{font-family:var(--serif);font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;font-size:15px;}
+.todo .t .c{font-size:14px;line-height:1.72;color:var(--ink);}
+.todo .t .c b{font-weight:700;}
+
+/* ===== 信源索引 ===== */
+.srcgrp{margin-bottom:28px;}
+.srcgrp h3{margin-top:0;}
+.srclist{margin:0;padding:0;}
+.srcitem{display:grid;grid-template-columns:112px 1fr;gap:12px;margin-bottom:12px;list-style:none;}
+.srclabel{font-size:12.5px;color:var(--ink-3);font-weight:700;line-height:1.6;}
+.srcbody{font-size:14px;line-height:1.7;overflow-wrap:anywhere;}
+.srcfield{display:block;margin-top:2px;font-size:12.5px;color:var(--ink-3);}
+
+footer{padding:34px 0 56px;color:var(--ink-3);font-size:13px;line-height:1.8;}
+footer b{color:var(--ink-2);}
+
+@media (max-width:960px){
+  .strip{grid-template-columns:repeat(2,1fr);}
+  .strip .cell:nth-child(2){border-right:0;}
+  .strip .cell{border-bottom:1px solid var(--line-2);padding-right:16px;}
+  .strip .cell:nth-child(3),.strip .cell:nth-child(4){border-bottom:0;}
+  .findings{grid-template-columns:1fr;}
+  .findings .f{border-right:0;border-bottom:1px solid var(--line-2);padding:20px 0 14px;}
+  .findings .f:last-child{border-bottom:0;}
+  .tablewrap{border:0;overflow:visible;}
+  table{min-width:0;table-layout:auto;display:block;}
+  thead{display:none;}
+  tbody{display:block;}
+  tbody tr{display:block;border:1px solid var(--line);margin-bottom:14px;padding:4px 0;}
+  tbody td{display:grid;grid-template-columns:88px 1fr;gap:10px;border-bottom:1px solid var(--line-2);padding:10px 14px;font-size:13.5px;}
+  tbody td:last-child{border-bottom:0;}
+  tbody td::before{
+    content:attr(data-label);font-size:12.5px;color:var(--ink-3);font-weight:700;line-height:1.6;
+  }
+  .chart{height:640px;}
+  .chart.tall{height:840px;}
+  .tnode{grid-template-columns:78px 20px 1fr;}
+  .tnode .when{font-size:12px;padding-right:7px;}
+  .tnode .body{padding-left:10px;}
+  .timeline::before{left:87.5px;}
+  .meta-row{font-size:14px;}
+  .strip .lbl{font-size:13.5px;}
+  .findings .f p{font-size:14.5px;}
+  tbody td{font-size:14.5px;grid-template-columns:98px 1fr;}
+  tbody td::before{font-size:13px;}
+  .dev{font-size:14px;}
+  .tablewrap a.ext{display:inline-block;padding:10px 0;}
+  .srcitem{grid-template-columns:1fr;gap:2px;}
+  .srclabel{font-size:13px;}
+  .srcbody{font-size:14.5px;}
+  .kicker{font-size:14px;}
+  .strip .lbl{font-size:14px;}
+  .tag{font-size:14px;}
+  h2.sec .no{font-size:14px;}
+}
+@media (max-width:520px){
+  .wrap{padding:0 16px;}
+  .chart{height:720px;}
+  .tnode{grid-template-columns:66px 16px 1fr;}
+  .timeline::before{left:73.5px;}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="kicker">云电脑 / 云桌面（DaaS）调研 · 中国大陆 · 2026 年 10 月口径</p>
+    <h1 class="title">中国云电脑 / 云桌面产品调研</h1>
+    <p class="subtitle">把一台 PC 搬到云上：谁在做、能免费用多少、按什么价格卖、办公与游戏各处在什么水位。19 个在营产品逐一核验，每条结论附可追溯来源；含运营商云电脑、公有云 DaaS、GPU 云工作站与云游戏对照项四类。</p>
+    <div class="meta-row">
+      <span>数据口径：<b>截至 2026-10-08</b></span>
+      <span>计价货币：<b>人民币（CNY）</b></span>
+      <span>信源交叉：<b>官方站点 / 云厂商文档 / 科技媒体</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="strip">
+    <div class="cell"><div class="num">19</div><div class="lbl">可评分在营产品</div></div>
+    <div class="cell"><div class="num">10</div><div class="lbl">含免费试用或免费额度</div></div>
+    <div class="cell"><div class="num">¥21–354</div><div class="lbl">主流付费档月费区间</div></div>
+    <div class="cell"><div class="num">4</div><div class="lbl">覆盖产品类型数</div></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<section>
+  <h2 class="sec"><span class="no">01</span>核心结论</h2>
+  <p class="lede">云电脑（云桌面 / DaaS）在 2025—2026 年从「企业 VDI 项目」变成了「按月订阅的通用算力」：公有云把按量计费压到 1 元出头一小时，运营商把 4 核 8GB 云电脑打到三十余元一个月，GPU 云工作站与云游戏则把图形算力做成了计时商品。同时，AI 与云电脑开始合流——多家厂商把大模型 Token 额度、AI Agent 预装能力直接打包进云电脑。</p>
+  <div class="findings">
+    <div class="f"><p class="t">价格分成三条线：企业按用户、个人按小时、运营商按月</p><p>企业 DaaS（腾讯云云桌面、华为云 Flexus、京东云 JD Workspaces）走「规格月费 + 许可」；个人与 GPU 场景（青椒云、ToDesk、海马云、达龙）走「计时/时长卡/云豆」；运营商（天翼、移动、联通）则把云电脑绑到套餐里按月卖——天翼公众版基础版限时 21 元/月起、移动 2C4G 月包 49 元，是全表月费最低的一段。</p></div>
+    <div class="f"><p class="t">免费额度是获客标配，但普遍是「一次性试水」</p><p>19 个在营产品中 10 个有免费试用或免费额度：阿里云无影个人版新客可免费试用 1 次、移动云 4C8G 信创型可免费体验一个月、顺网新用户免费体验 1 小时、青椒云注册赠 3 元代金券。真正长期免费的极少，主流是「首购特惠」（华为云企业版 69.9 元/月起、腾讯云 5 折）而非永久免费。</p></div>
+    <div class="f"><p class="t">AI 正在成为云电脑的标配而非卖点</p><p>2026 年上半年，移动云上线「一键部署 OpenClaw」专区并把它作为云电脑核心场景，联通把云智电脑与优选出的大模型 Token 额度打包（每月赠 3000 万 Token），腾讯云 OpenClaw 云桌面 5 折 123.25 元/月，金山云、中兴也在往「AI 云电脑」演。云电脑的竞争点从「有一台云 Windows」转向「云上能不能直接干活」。</p></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">02</span>产品字段总表</h2>
+  <p class="lede">同一行回答同一组问题：谁做的、属于哪一类、去哪开通、能免费用多少、按什么价格卖、体验与短板在哪。评分为主观共识评分（10 分制），非厂商指标；价格与免费额度为 2026-10-08 官方口径，无法核实一律标「待确认」。</p>
+  <div class="tablewrap">
+    <table>
+      <colgroup>
+        <col style="width:15%"><col style="width:7%"><col style="width:13%">
+        <col style="width:12%"><col style="width:17%"><col style="width:16%"><col style="width:20%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>产品 / 厂商</th>
+          <th>评分</th>
+          <th>评分依据</th>
+          <th>官方入口</th>
+          <th>免费额度</th>
+          <th>价格</th>
+          <th>特点与局限</th>
+        </tr>
+      </thead>
+      <tbody id="mainTable">
+      </tbody>
+    </table>
+  </div>
+  <p class="caption" id="tableCaption"></p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">03</span>综合质量评分对比</h2>
+  <p class="lede">评分为主观共识评分，由作者综合官方文档、云厂商定价页与第三方实测/评测结论给出，满分 10 分。评估维度：可用性与稳定性、计费透明度与性价比、配置与图形能力、多端接入与生态、数据安全与合规；四类产品（企业云桌面 / 消费级云电脑 / GPU 云工作站 / 云游戏）按各自核心维度加权。</p>
+  <div class="chart-card">
+    <p class="chart-title">（19）个对象的综合质量评分（满分 10）</p>
+    <p class="chart-sub">颜色区分产品类型：深青为企业云桌面 / DaaS，赭色为消费级云电脑，蓝为 GPU 云工作站，橄榄为云游戏（含对照项）。</p>
+    <div class="chart tall" id="chartScore"></div>
+    <p class="caption">数据口径：2026-10-08。评分非厂商官方指标，且四类产品不宜直接横向比较。</p>
+  </div>
+  <p>第一梯队集中在 8.2 分以上的云厂与头部方案商：阿里云无影（8.6）、华为云 Flexus 云桌面（8.5）、腾讯云云桌面（8.4）、天翼云电脑（8.3）、深信服 aDesk（8.2）。评分差异的主要来源不是「能不能开出一台云 Windows」——这项已是基线——而是计费是否透明、闲置是否收费、多端接入是否顺滑，以及数据能不能持久保存。需要说明的是四类产品不可直接横向比较：云游戏类看的是延迟与价格、GPU 云工作站看的是显卡档位与渲染稳定性、企业 DaaS 看的是管控与合规，本图只按各自核心维度加权后的综合分排序。</p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">04</span>价格与免费额度的位置</h2>
+  <p class="lede">把「最低付费月费」和「综合评分」放在同一坐标系，看免费与付费档的分布规律。</p>
+  <div class="chart-card">
+    <p class="chart-title">最低付费月费与综合评分的关系</p>
+    <p class="chart-sub">横轴为可查证的最低付费月费（元/月），完全免费者记为 0；纵轴为综合评分。仅纳入价格口径明确且能折算为月费的产品；按时长卡、云豆、按小时计费而无法可靠折算月费的产品（顺网云电脑、达龙云电脑、网易云电游、青椒云按时档、金山云、中兴、深信服、锐捷、极云普惠）未纳入本图，详见总表与待确认清单。</p>
+    <div class="chart" id="chartPrice"></div>
+    <p class="caption">未纳入本图的条目及其原因见总表与待确认清单。</p>
+  </div>
+  <p>把最低付费月费与评分放在一起，可以看到国内云电脑并没有形成「越贵越好」的关系：月费 21–120 元区间聚集了从 7.5 到 8.6 分的产品，天翼云电脑（21 元/月起）与阿里云无影（39.9 元/月起）都落在高分区，而价格最高的京东云 JD Workspaces（353.7 元/月）评分反而处在中游——因为它面向企业，卖的是统一纳管与合规而不是性价比。免费额度已是获客标配，但差别很大：有的是一次性试水（阿里云无影个人版新客限 1 次、顺网免费 1 小时），有的是可持续使用（移动云 4C8G 免费体验一个月、青椒云注册赠 3 元代金券）。</p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">05</span>2025—2026 关键节点</h2>
+  <p class="lede">按公开可查的发布、调价与服务变更时点排列，用于理解竞争格局是怎么形成的。</p>
+  <div class="timeline" id="timeline"></div>
+  <p style="margin-top:22px;">2025 年是「补齐企业能力」的一年：政企信创、国产化规格、GPU 云电脑陆续成标配；2026 年上半年则明显转向两件事——一是 AI 与云电脑合流（运营商和云厂纷纷把大模型 Token 与 AI Agent 打包进云电脑），二是价格继续下探（公众版云电脑进入二三十元区间、包夜卡打到每小时不到五毛）。运营商凭借套餐与网络优势切走个人与政企两块市场，云厂则守住企业与开发者场景。</p>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">06</span>厂商 / 能力核验</h2>
+  <p class="lede">用户情报与检索中重点点名的厂商与方向，逐一给出核验结论；没有能力或无法核实就如实写。</p>
+  <div class="tablewrap">
+    <table>
+      <colgroup><col style="width:16%"><col style="width:16%"><col style="width:68%"></colgroup>
+      <thead>
+        <tr><th>厂商 / 产品</th><th>核验结论</th><th>说明</th></tr>
+      </thead>
+      <tbody id="verifyTable"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">07</span>信源索引</h2>
+  <p class="lede">按产品分组，标注每条来源支撑哪些字段。三类信源交叉验证：官方站点与官方文档、云厂商定价/计费页、科技媒体与行业报道。</p>
+  <div id="sourceIndex"></div>
+</section>
+
+<section>
+  <h2 class="sec"><span class="no">08</span>待确认与无法核实项</h2>
+  <p class="lede">以下条目在本轮公开检索范围内无法取得可靠官方口径，如实列出，未作推测填补。</p>
+  <div class="todo" id="todoList"></div>
+</section>
+
+<footer>
+  <p><b>方法与免责：</b>本报告信息采集截止北京时间 2026 年 10 月 8 日，价格均以人民币计。「云电脑 / 云桌面质量评分」为主观共识评分，由作者综合官方文档、定价页与第三方实测结论给出，非厂商官方指标，也不等同于客观基准测试；同一产品在不同规格、区域、网络与时段下表现差异较大。</p>
+  <p><b>已剔除的非官方来源：</b>第三方域名自称官方或提供更低报价的页面，均不作为官方依据；「海星云」一类与云电脑无关的同名/近似名站点，以及价格公示严重滞后的页面，已在核验表与待确认清单中单独标注。</p>
+  <p>价格与免费额度变动频繁，正式采购前请以厂商官方页面为准。</p>
+</footer>
+
+<script>
+/* =====================================================================
+   数据口径（2026-10-08）：
+   1. PRODUCTS：cat 取值 ent（企业云桌面/DaaS）/ cons（消费级云电脑）/
+      gpu（GPU 云工作站）/ game（云游戏，含对照项）；score 为 10 分制主观共识分；
+      basis 首句写共识区间；avail 取 free/paid；free 写免费额度具体口径；
+      price 写价格（国内人民币）；note 写特点与局限。
+   2. PRICE_POINTS：x=最低付费月费（元），y=评分，free=是否有免费额度，lp=标签位置。
+   3. TIMELINE：{when, what, why, hot}，hot=true 为关键节点（赭色圆点）。
+   4. VERIFIED：{name, verdict, note}。
+   5. SOURCES：按产品分组，items 为 [来源类型, 链接HTML(或纯文本), 支撑字段]。
+   6. TODOS：[条目, 待确认说明]。
+===================================================================== */
+
+const CAT = {ent:'企业云桌面/DaaS', cons:'消费级云电脑', gpu:'GPU 云工作站', game:'云游戏（对照）'};
+const CAT_TAG = {ent:'cat-video', cons:'cat-live', gpu:'cat-clone', game:'cat-interactive'};
+const CAT_COLOR = {ent:'#12564C', cons:'#C4762A', gpu:'#4E7BA6', game:'#7C8A5A'};
+
+const PRODUCTS = [
+  {
+    name:"阿里云 无影云电脑（WUYING）", dev:"阿里云（Alibaba Cloud）", cat:"ent",
+    score:8.6, avail:"free",
+    site:{label:"aliyun.com/product/wuying", url:"https://www.aliyun.com/product/wuying/gws/personal_edition"},
+    free:"个人版新客户免费试用 1 次（系统盘 60G + 数据盘 40G，不足以安装大型 3A 游戏）；企业版完成企业实名认证可试用 2 台 8 核 16GB（每月 120 小时，原价 138 元/台）；另可领取 8000 核时加油包",
+    price:"个人版按「无影灵豆」计：黄金款 Plus 含 40 灵豆/月、白金款 Plus 含 160 灵豆/月、铂金款 Plus ¥39.90/月（含 640 灵豆/月）；企业版 8 核 16GB 每月 120 小时 原价 ¥138/台",
+    basis:"共识区间 8.4–8.8（取 8.6）：公有云云电脑标杆，个人与企业双线、节点覆盖广、按需弹性好",
+    note:"无影终端 + 浏览器/客户端多端接入，就近节点多、弹性扩缩容，个人办公与企业场景通吃；短板是「灵豆」与「核时」两套计价需自行换算，跑大型游戏要更高档位。"
+  },
+  {
+    name:"华为云 Flexus 云桌面 / Workspace", dev:"华为云（Huawei Cloud）", cat:"ent",
+    score:8.5, avail:"free",
+    site:{label:"huaweicloud.com/product/flexus-workspace.html", url:"https://www.huaweicloud.com/product/flexus-workspace.html"},
+    free:"免费试用中心可申请部分规格体验；企业版提供首购特惠 69.9 元/月起",
+    price:"Flexus 云桌面企业版首购 ¥69.9/月起；Flexus 版 4 核 8GB、120 小时/月 ¥90/月；小时包含 120/200/260 小时档；国际站 Workspace Ultimate 4vCPU/16GB $68.16/月",
+    basis:"共识区间 8.2–8.7（取 8.5）：企业办公云桌面第一梯队，自研 HDP 协议、智能休眠不扣费",
+    note:"自研 HDP 传输协议 + 智能休眠（不用不扣费）显著降低闲置成本，与华为终端和运维体系整合好；短板是 Flexus 按有限时长计费、超量转按需，长期满负荷不如包月划算。"
+  },
+  {
+    name:"天翼云电脑（AI 云电脑）", dev:"中国电信 · 天翼云", cat:"ent",
+    score:8.3, avail:"free",
+    site:{label:"ctyun.cn", url:"https://www.ctyun.cn/document/10026992/10027298"},
+    free:"天翼云免费试用中心提供多款云产品试用（云电脑具体试用额度以活动页为准）",
+    price:"公众版：基础版 2 核 4GB/80GB 原价 ¥60/月起、限时 ¥21.0/月起；标准版 4 核 8GB 原价 ¥93/月、限时 ¥32.55/月起。政企版：国产化 AI 云电脑 4 核 8GB ¥120/台/月（原价 166）、8 核 16GB ¥219/台/月（原价 304）；GPU 云电脑 8 核 16GB/8G 显存 ¥1295/月",
+    basis:"共识区间 8.0–8.6（取 8.3）：运营商云电脑主力，公众版价格最低、政企信创规格最全",
+    note:"背靠中国电信网络与政企渠道，公众版把 4 核 8GB 压到三十余元/月，国产化信创规格齐全；短板是 GPU 档位价格偏高，部分规格仅个别资源池可开通。"
+  },
+  {
+    name:"移动云电脑", dev:"中国移动 · 移动云", cat:"ent",
+    score:8.2, avail:"free",
+    site:{label:"workspace.cmecloud.cn", url:"https://workspace.cmecloud.cn/"},
+    free:"活动期 4C8G 信创型、4C8G 办公型云电脑免费体验一个月",
+    price:"月包：2C4G ¥49/月、4C8G ¥79/月、8C16G ¥129/月、16C32G ¥219/月；行业型娱乐版按时长 25 元/5 小时、60 元/15 小时、110 元/30 小时",
+    basis:"共识区间 7.9–8.5（取 8.2）：与运营商套餐深度绑定，月包档位清晰、免费体验实在",
+    note:"与手机号/话费套餐和家庭宽带结合，跨屏协同与 4K 低延迟传输是差异化；短板是娱乐版按时长包计价，图形性能弱于专业 GPU 云电脑。"
+  },
+  {
+    name:"联通云智电脑（UniClaw）", dev:"中国联通", cat:"ent",
+    score:8.0, avail:"free",
+    site:{label:"10010.com", url:"https://www.10010.com/"},
+    free:"活动期订购即每月赠送 3000 万 Token，前三个月限时升级至 1 亿 Token",
+    price:"按月订阅（融合套餐）；终端套装另计：升腾 PAD 型云电脑 T330 ¥1599、中兴云电脑 W205DS ¥1639 起；具体月费待确认",
+    basis:"共识区间 7.7–8.3（取 8.0）：云电脑 + 大模型 Token 融合订阅，终端形态新",
+    note:"把云电脑与优选出的大模型、Token 额度打包，配合平板/手机/电脑三合一终端，办公与 AI 使用一体化；短板是月费与配置口径公示不完整，需以渠道为准。"
+  },
+  {
+    name:"腾讯云云桌面（CVD）", dev:"腾讯云", cat:"ent",
+    score:8.4, avail:"paid",
+    site:{label:"cloud.tencent.com/product/cvd", url:"https://cloud.tencent.com/product/cvd"},
+    free:"无公开免费试用；AI Agent 云桌面为每日限量特惠抢购，支持关机不收费以降低试错成本",
+    price:"按量计费 ¥1.42/小时起；包年包月 标准 S3 2 核 4G ¥119/月、4 核 8G ¥179/月；OpenClaw 云桌面 ¥123.25/月（原价 246.5，限时 5 折）；标准 S3 8 核 16G ¥173.25/月（原价 346.5）",
+    basis:"共识区间 8.1–8.7（取 8.4）：企业云桌面综合能力强，按量 1.42 元/小时起、关机不收费",
+    note:"Windows/Linux 双镜像、预装 AI Agent、支持关机不收费与企业级集中管控，适合研发与办公；短板是面向个人用户的入口弱、缺少免费额度。"
+  },
+  {
+    name:"京东云 JD Workspaces", dev:"京东云", cat:"ent",
+    score:7.8, avail:"paid",
+    site:{label:"docs.jdcloud.com/cn/jd-workspaces", url:"https://docs.jdcloud.com/cn/jd-workspaces/price-overview"},
+    free:"待确认（本轮未检索到公示的免费额度）",
+    price:"4 核 8G / 1M 带宽 / 500G 存储 ¥353.7/月；4 核 8G / 2M 带宽 ¥372.6/月",
+    basis:"共识区间 7.5–8.1（取 7.8）：云厂工作空间产品，规格少但价格直白",
+    note:"与京东云 IaaS 同栈，便于统一纳管与企业合规；短板是公开规格与价格条目很少，基本面向企业客户，个人无法自助开通。"
+  },
+  {
+    name:"金山云 云电脑（KED）", dev:"金山云", cat:"ent",
+    score:7.7, avail:"paid",
+    site:{label:"docs.ksyun.com/documents/42753", url:"https://docs.ksyun.com/documents/42753"},
+    free:"待确认",
+    price:"按 vCPU/内存规格 + 系统盘/数据盘计费，支持包年包月与按天计费；具体单价待确认",
+    basis:"共识区间 7.3–8.0（取 7.7）：计费维度拆分清晰，但公开价格摘要有限",
+    note:"文档把云电脑规格与计费拆分得较清楚，适合批量采购与成本核算；短板是公开价格页缺少完整单价，生态与终端配套不如头部云厂。"
+  },
+  {
+    name:"青椒云（设计云电脑）", dev:"深圳市瑞云科技（青椒云）", cat:"gpu",
+    score:8.0, avail:"free",
+    site:{label:"qingjiaocloud.com", url:"https://www.qingjiaocloud.com/product/personal/"},
+    free:"注册即赠 3 元免费代金券（可用于计时计费云桌面）",
+    price:"计时 ¥0.07–1.94/小时；GPU 办公增强版 ¥0.36/小时起、专业版 ¥0.59/小时起；AI Agent 云桌面入门限时五折包月 ¥99（1 个月 2 核 4G + 2888 积分）；进阶版 ¥140/月",
+    basis:"共识区间 7.6–8.3（取 8.0）：设计/渲染 GPU 云电脑，档位与包周期折扣最全",
+    note:"面向设计、渲染、数字人与多开场景，GPU 档位与包周期折扣丰富、按时计费门槛低；短板是高端 GPU 档小时价并不便宜，个人向为主、企业管控能力一般。"
+  },
+  {
+    name:"ToDesk 云电脑", dev:"海南有趣科技（ToDesk）", cat:"cons",
+    score:7.9, avail:"paid",
+    site:{label:"todesk.com", url:"https://www.todesk.com/news/695.html"},
+    free:"待确认（有首单与活动优惠，未见长期免费额度）",
+    price:"云电竞 RTX3060 ¥1.98/小时、RTX4070 ¥2.5/小时起；闲时电竞卡 6 小时 ¥6.9（约 1.15 元/小时，限 02:00–08:00）；云 AIGC 包天 ¥68；分计时机与包时机两种",
+    basis:"共识区间 7.5–8.2（取 7.9）：电竞档价格透明，与远控客户端生态协同",
+    note:"远控起家、客户端成熟，电竞与 AIGC 双产品线，闲时卡把夜间价格打到 1 元出头；短板是云电脑数据不持久（断开超 5 分钟清除数据）、无稳定免费额度。"
+  },
+  {
+    name:"联想云电脑", dev:"联想（Lenovo）", cat:"cons",
+    score:7.8, avail:"free",
+    site:{label:"cloudpc.lenovo.com", url:"https://www.cloudpc.lenovo.com/"},
+    free:"1 元试用即可创建云电脑；注册送免费试玩、签到可领每日好礼",
+    price:"1 元试用起；提供独享 RTX 4070 / 4090D 显卡档位，按配置与时长计费，公开价目待确认",
+    basis:"共识区间 7.4–8.1（取 7.8）：硬件厂商背书，1 元试用门槛极低",
+    note:"面向企业 Hybrid Workspace 与个人 Mac/低配设备，硬件厂商的终端与服务背书；短板是官网公开价目不完整，长期成本需向渠道确认。"
+  },
+  {
+    name:"中兴 uSmart 云电脑", dev:"中兴通讯（ZTE）", cat:"ent",
+    score:8.1, avail:"paid",
+    site:{label:"zte.com.cn", url:"https://www.zte.com.cn/china/enterprisesolution/anquanbangong.html"},
+    free:"待确认（政企项目制，通常 POC 试用）",
+    price:"政企解决方案按项目报价（待确认）；消费端 逍遥系列二合一 5G 云电脑 1899 元起，驭风系列笔记本型云终端、玲珑系列零终端按机型定价",
+    basis:"共识区间 7.8–8.4（取 8.1）：政企云电脑方案完整，自研终端形态最全",
+    note:"VDI 专属云桌面、池化共享云桌面与应用虚拟化全覆盖，同时支持信创与传统桌面，终端从零终端到二合一最全；短板是政企主导、无自助在线价格。"
+  },
+  {
+    name:"深信服 aDesk 桌面云", dev:"深信服（Sangfor）", cat:"ent",
+    score:8.2, avail:"free",
+    site:{label:"sangfor.com.cn/sangfor-cloud/adesk", url:"https://www.sangfor.com.cn/sangfor-cloud/adesk"},
+    free:"试用中心可申请（¥0 起）",
+    price:"待确认（VDI 授权分普通/高级/铂金用户，按项目报价；DaaS 为订阅制）",
+    basis:"共识区间 7.9–8.5（取 8.2）：政企桌面云头部，超融合 + 自研广域网协议",
+    note:"超融合 + 自研 HEDC 广域网协议、零信任安全，在政企/金融/医疗落地多；短板是没有公开在线价格，面向中大型组织，个人与小微不适配。"
+  },
+  {
+    name:"锐捷三擎云桌面", dev:"锐捷网络（Ruijie）", cat:"ent",
+    score:8.0, avail:"paid",
+    site:{label:"ruijie.com.cn/cp/ykt", url:"https://www.ruijie.com.cn/cp/ykt/"},
+    free:"待确认（方案商模式，通常以 POC 试用为主）",
+    price:"待确认（软硬一体方案，按项目报价）",
+    basis:"共识区间 7.7–8.3（取 8.0）：VDI+IDV+TCI 三擎融合，行业方案成熟",
+    note:"VDI+IDV+TCI 三擎融合，教育/医疗/金融行业方案成熟、云终端形态多；短板是需整体采购、无自助价格与试用入口。"
+  },
+  {
+    name:"顺网云电脑", dev:"顺网科技", cat:"game",
+    score:7.6, avail:"free",
+    site:{label:"cpc.icloud.cn", url:"https://cpc.icloud.cn/"},
+    free:"新用户注册登录免费体验 1 小时",
+    price:"通宵包夜卡 9 小时 ¥3.98（约 0.44 元/小时）；5 小时首充卡 ¥4.9（约 0.98 元/小时）；15 天套餐 100 云币 ¥68、200 云币 ¥118、340 云币 ¥168；官网标「低至 1.05 元/月起」",
+    basis:"共识区间 7.2–7.9（取 7.6）：夜间包夜卡性价比标杆，游戏库厚",
+    note:"网吧系统出身、最懂游戏场景，包夜卡把价格打到每小时四毛多，热门网游与 3A 免下载；短板是云币/时长卡计价不直观，办公与企业能力弱。"
+  },
+  {
+    name:"达龙云电脑", dev:"达龙云", cat:"cons",
+    score:7.2, avail:"free",
+    site:{label:"dalongyun.com", url:"https://www.dalongyun.com/"},
+    free:"每日免费体验（限时，具体额度以客户端为准）",
+    price:"云豆计费：非会员标配 5 云豆/小时、高配 6；会员标配 3、高配 4、豪配 6；一次性充值 50 元即成为会员；SVIP 月费约 ¥39.9–49.9；会员时长包 20 小时 ¥30、30 小时 ¥42、60 小时 ¥72、90 小时 ¥90",
+    basis:"共识区间 6.9–7.6（取 7.2）：老牌手机云 PC，云豆 + 会员双轨",
+    note:"把手机/电视变成 PC 的老玩家，云豆与会员组合灵活、常有优惠；短板是多数价格说明为历史口径（2018—2025），规则复杂，采购前需重新核验。"
+  },
+  {
+    name:"网易云游戏（云电脑）", dev:"网易", cat:"game",
+    score:7.5, avail:"paid",
+    site:{label:"ps.res.netease.com/cloudgame/cloudpc.html", url:"https://ps.res.netease.com/cloudgame/cloudpc.html"},
+    free:"待确认（平台不定期活动）",
+    price:"云币 180 云币/小时特惠（约 1.8 元/小时）；端游会员月卡 ¥88（每天 2 小时）；云币充值 1000 云币 ¥10 起",
+    basis:"共识区间 7.1–7.8（取 7.5）：与云游戏平台共用云币，游戏生态强",
+    note:"网易官方云游戏平台内嵌云电脑，独占端游与独立私有数据盘是卖点；短板是云币换算不直观、定位偏游戏，办公与 GPU 生产力场景覆盖弱。"
+  },
+  {
+    name:"海马云电脑", dev:"海马云（HaimaCloud）", cat:"gpu",
+    score:7.9, avail:"paid",
+    site:{label:"pc.haimacloud.com", url:"https://pc.haimacloud.com/"},
+    free:"待确认（活动兑换码赠送时长，无长期免费额度）",
+    price:"时长卡：89 元/90 天/30 小时、169 元/180 天/60 小时、249 元/270 天/90 小时、319 元/365 天/120 小时、799 元/30 天不限时；精英会员 ¥38.8/月、史诗会员 ¥106/月（连续包月）",
+    basis:"共识区间 7.5–8.2（取 7.9）：硬件规格最高，按时长卡计价、掌机生态延伸",
+    note:"全系 70 系/90 系显卡、获泰尔实验室「电竞级云电脑」认证，还做了端云混合掌机 GEAR（¥3149）；短板是折算单价偏高（约 2.4–6 元/小时），无自助免费额度。"
+  },
+  {
+    name:"极云普惠云电脑", dev:"极云普惠", cat:"cons",
+    score:7.0, avail:"paid",
+    site:{label:"ji-cloud.cn", url:"https://www.ji-cloud.cn/"},
+    free:"待确认",
+    price:"待确认（官网价格公示为 2018 年旧口径：标准版 8G/GTX1650、高级版 16G/GTX1060、畅玩版等）",
+    basis:"共识区间 6.6–7.4（取 7.0）：老牌云电脑，配置档位含独立显卡",
+    note:"老牌云电脑，配置档位覆盖到中端独显；短板是价格与在营状态公示严重滞后（页面仍为 2018 年口径），采购前必须另行核验在营状态与报价。"
+  }
+];
+
+const PRICE_POINTS = [
+  {name:'天翼云电脑', x:21, y:8.3, free:true, lp:'right'},
+  {name:'海马云电脑', x:38.8, y:7.9, free:false, lp:'left'},
+  {name:'阿里云无影', x:39.9, y:8.6, free:true, lp:'top'},
+  {name:'达龙云电脑', x:39.9, y:7.2, free:true, lp:'bottom'},
+  {name:'移动云电脑', x:49, y:8.2, free:true, lp:'bottom'},
+  {name:'华为云Flexus', x:69.9, y:8.5, free:true, lp:'right'},
+  {name:'网易云游戏', x:88, y:7.5, free:false, lp:'right'},
+  {name:'青椒云', x:99, y:8.0, free:true, lp:'bottom'},
+  {name:'腾讯云云桌面', x:119, y:8.4, free:false, lp:'top'},
+  {name:'京东云Workspaces', x:353.7, y:7.8, free:false, lp:'left'}
+];
+
+const TIMELINE = [
+  {when:'2026.03', what:'移动云上线「一键部署 OpenClaw」专区，云电脑成 AI 智能体载体', why:'移动云把 OpenClaw 部署能力直接做进云电脑，并提供 4C8G 信创型/办公型云电脑免费体验一个月；同期山东联通发布 OpenClaw 安全服务方案，AI 云桌面/云电脑开放免费试用。云电脑的价值主张从「提供一台云 Windows」转向「云上直接跑 AI」。', hot:true},
+  {when:'2026.04', what:'中国联通推出云智电脑 UniClaw，每月赠送 3000 万 Token', why:'把云电脑与优选出的大模型能力打包成融合订阅，前三个月限时升级至 1 亿 Token，并配升腾 PAD 型与中兴笔记本型终端。运营商第一次把「算力 + 模型」一起卖给个人与政企。', hot:true},
+  {when:'2026.06', what:'天翼 AI 云电脑（政企版）调价，GPU 云电脑价格下探', why:'自 6 月 1 日起天翼云电脑政企版多项规格调价，其中 GPU 云电脑（渲染版）16C32G/8G 显存由 1927 元/台/月降至 1722 元/台/月；同期推国产化 AI 云电脑 4 核 8GB 折后 120 元/台/月，把信创 GPU 云电脑拉进千元档。', hot:true},
+  {when:'2026.06', what:'中兴携手腾讯举办 AI 云电脑体验日', why:'中兴通讯联合腾讯发布搭载 AI 助手的云电脑方案，主打「云电脑 + 智能体」的政企与教育场景，进一步印证云电脑与 AI 合流的方向。', hot:false},
+  {when:'2026.09', what:'消费级云电脑打起「闲时价格战」', why:'顺网云电脑通宵包夜卡 9 小时 3.98 元（约 0.44 元/小时），ToDesk 闲时电竞卡 6 小时 6.9 元（约 1.15 元/小时，限凌晨 2—8 点），胖盒云一日卡 24 小时活动价 11.85 元。个人云电脑进入「按小时不到一元」的区间。', hot:false}
+];
+
+const VERIFIED = [
+  {name:'华为云电脑（消费者版）', verdict:'<span class="tag">待确认</span>', note:'「华为云电脑」是早期面向消费者的云电脑 App，与现在的「华为云 Workspace / Flexus 云桌面」并非同一产品线；本轮未取得该消费级产品的在营状态官方口径，按待确认处理，主表收录的是企业向的 Flexus 云桌面 / Workspace。'},
+  {name:'海星云（haixingyun）', verdict:'<span class="tag">非云电脑</span>', note:'「海星云」实为面向建站与海外业务的 VPS / 云服务器主机商，并非云电脑产品；与抖音等平台上测评的「海马云电脑」（pc.haimacloud.com）名字相近但完全无关，易混淆，本轮已排除。'},
+  {name:'UCloud 优刻得', verdict:'<span class="tag">无自有云桌面产品线</span>', note:'本轮检索未发现 UCloud 有面向公众的云电脑/云桌面（DaaS）产品，公开页面上出现的桌面化方案多为第三方（如 TSplus 等）在 UCloud 主机上的部署；故未纳入主表。'},
+  {name:'胖盒云电脑', verdict:'<span class="tag">待确认</span>', note:'第三方测评普遍提到胖盒云电脑按「盒币」计费（60 系标配 1 盒币/小时、70 系高配 2 盒币/小时，一日卡 24 小时活动价 11.85 元），但本轮未核实到其官方域名与官方价格页，故不纳入主表，列入待确认。'},
+  {name:'金山云 / 京东云', verdict:'<span class="tag">有产品，价格页不完整</span>', note:'两家均有云电脑/工作空间产品（金山云 KED 云电脑、京东云 JD Workspaces），但公开定价页只给出规格与计费方式，缺少完整单价或规格条目很少，已按「待确认」标注具体价格。'},
+  {name:'网易云游戏', verdict:'<span class="tag">有产品，云游戏为主</span>', note:'网易云游戏本质是云游戏平台，云电脑（cloudpc）是其内嵌子能力，与云币体系共用；作为游戏向对照项纳入主表。'},
+  {name:'深信服 / 锐捷 / 中兴', verdict:'<span class="tag">有产品，项目制报价</span>', note:'三家均提供完整的政企桌面云/云电脑方案（深信服 aDesk、锐捷三擎云桌面、中兴 uSmart 云电脑），能力可查但无公开在线价格，统一按「待确认」处理报价字段，主表评分依据取自方案能力与行业落地。'},
+  {name:'运营商三方（天翼 / 移动 / 联通）', verdict:'<span class="tag">有产品，双轨定价</span>', note:'三家均同时面向公众与政企售卖云电脑，公众版按月低价、政企版按项目与信创规格定价；2026 年三家不约而同把 AI 能力（大模型 Token、AI 助手、OpenClaw 部署）打包进云电脑。'}
+];
+
+const SOURCES = [
+  {p:"阿里云 无影云电脑（WUYING）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.aliyun.com/product/wuying/gws/personal_edition\">阿里云无影云电脑个人版</a>","官方入口、个人版灵豆档位与月费"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.aliyun.com/product/edse\">阿里云无影云电脑企业版</a>","企业版规格、免费试用口径、8 核 16GB 原价"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.aliyun.com/activity/creativity/wuying\">阿里云无影加油包活动页</a>","免费额度（8000 核时加油包、新客试用）"]
+  ]},
+  {p:"华为云 Flexus 云桌面 / Workspace", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.huaweicloud.com/product/flexus-workspace.html\">华为云 Flexus 云桌面产品页</a>","产品定位、企业版首购价、Flexus 版规格与月费"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.huaweicloud.com/product/workspace.html\">华为云 Workspace 云桌面</a>","HDP 协议、智能休眠、企业云桌面能力"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.huaweicloud.com/intl/en-us/product/workspace.html\">Huawei Cloud Workspace（国际站）</a>","国际站 Ultimate 4vCPU/16GB $68.16/月"]
+  ]},
+  {p:"天翼云电脑（AI 云电脑）", items:[
+    ["官方文档","<a class=\"ext\" href=\"https://www.ctyun.cn/document/10026992/10027298\">天翼云电脑（公众版）产品介绍与价格</a>","公众版基础版/标准版规格与限时价"],
+    ["官方文档","<a class=\"ext\" href=\"https://www.ctyun.cn/document/10027004/10028040\">天翼云电脑（政企版）计费说明</a>","政企版国产化 AI 云电脑、GPU 云电脑价格"],
+    ["官方公告","<a class=\"ext\" href=\"https://www.ctyun.cn/sswd/10000606-Y\">天翼云产品调价公告（2026-06-01 起）</a>","GPU 云电脑渲染版 1927→1722 元/台/月"]
+  ]},
+  {p:"移动云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://workspace.cmecloud.cn/\">移动云电脑官网入口</a>","官方入口"],
+    ["官方站点","<a class=\"ext\" href=\"https://ecloud.10086.cn/portal/product/vdi\">移动云云电脑产品页</a>","月包档位（2C4G 49 元、4C8G 79 元等）"],
+    ["科技媒体","<a class=\"ext\" href=\"https://www.cnr.cn/tech/20260317/t20260317_527328795.shtml\">央广网：移动云上线 OpenClaw 专区</a>","免费体验 1 个月、AI 云电脑场景"]
+  ]},
+  {p:"联通云智电脑（UniClaw）", items:[
+    ["科技媒体","<a class=\"ext\" href=\"https://tech.chinadaily.com.cn/a/202604/09/WS66d9f8c1a310942cc4990f2b.html\">中国日报：中国联通发布云智电脑</a>","融合订阅、每月赠 3000 万 Token（前三月 1 亿）"],
+    ["官方站点","<a class=\"ext\" href=\"https://s.10010.com/\">中国联通商城：云电脑终端</a>","终端套装价格（升腾 T330 1599 元、中兴 W205DS 1639 元起）"]
+  ]},
+  {p:"腾讯云云桌面（CVD）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://cloud.tencent.com/product/cvd\">腾讯云云桌面 CVD 产品页</a>","产品定位、按量 1.42 元/小时起、双系统与关机不收费"],
+    ["官方站点","<a class=\"ext\" href=\"https://cloud.tencent.com/act/pro/CVD\">腾讯云云桌面特惠活动页</a>","标准 S3 规格与包年包月价、OpenClaw 云桌面 5 折"],
+    ["官方站点","<a class=\"ext\" href=\"https://cloud.tencent.com/document/product/1291\">腾讯云云桌面文档</a>","计费方式与规格口径"]
+  ]},
+  {p:"京东云 JD Workspaces", items:[
+    ["官方文档","<a class=\"ext\" href=\"https://docs.jdcloud.com/cn/jd-workspaces/price-overview\">京东云 JD Workspaces 价格总览</a>","4 核 8G 月费 353.7 / 372.6 元"]
+  ]},
+  {p:"金山云 云电脑（KED）", items:[
+    ["官方文档","<a class=\"ext\" href=\"https://docs.ksyun.com/documents/42753\">金山云云电脑计费说明</a>","按 vCPU/内存 + 系统盘/数据盘计费、包年包月与按天"]
+  ]},
+  {p:"青椒云（设计云电脑）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.qingjiaocloud.com/product/personal/\">青椒云个人版产品页</a>","计时 0.07–1.94 元/小时、GPU 档位时价"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.qingjiaocloud.com/pricing/\">青椒云价格页</a>","AI Agent 云桌面入门包月 99 元、进阶版 140 元/月"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.qingjiaocloud.com/\">青椒云官网</a>","注册赠 3 元代金券"]
+  ]},
+  {p:"ToDesk 云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.todesk.com/news/695.html\">ToDesk 云电脑价格说明</a>","云电竞 RTX3060 1.98 元/小时、RTX4070 2.5 元/小时起"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.todesk.com/pricing.html\">ToDesk 价格页</a>","闲时电竞卡 6 小时 6.9 元、云 AIGC 包天 68 元、远控专业版 24 元/月"]
+  ]},
+  {p:"联想云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.cloudpc.lenovo.com/\">联想云电脑官网</a>","1 元试用、RTX 4070/4090D 独享档位、注册赠送"],
+    ["官方站点","<a class=\"ext\" href=\"https://lestore.lenovo.com/detail/L117970\">联想企业云电脑（知识库）</a>","企业标准化 30 点方案参考价"]
+  ]},
+  {p:"中兴 uSmart 云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.zte.com.cn/china/enterprisesolution/anquanbangong.html\">中兴 uSmart 云电脑解决方案</a>","VDI/池化/应用虚拟化、终端形态与逍遥系列价格"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.zte.com.cn/china/about/news/20260603c2.html\">中兴通讯：AI 云电脑体验日</a>","中兴携手腾讯发布 AI 云电脑"]
+  ]},
+  {p:"深信服 aDesk 桌面云", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.sangfor.com.cn/sangfor-cloud/adesk\">深信服 aDesk 桌面云产品页</a>","产品定位、超融合与自研广域网协议"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.sangfor.com.cn/sangfor-cloud/daas\">深信服 DaaS 桌面云服务</a>","订阅制与授权分档（普通/高级/铂金用户）"],
+    ["官方站点","<a class=\"ext\" href=\"https://support.sangfor.com.cn/\">深信服试用中心</a>","免费试用入口"]
+  ]},
+  {p:"锐捷三擎云桌面", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.ruijie.com.cn/cp/ykt/\">锐捷云桌面产品线</a>","VDI+IDV+TCI 三擎融合、行业方案与云终端"]
+  ]},
+  {p:"顺网云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://cpc.icloud.cn/\">顺网云电脑官网</a>","官方入口、云币与时长卡、「低至 1.05 元/月起」"],
+    ["用户社区","<a class=\"ext\" href=\"https://apps.apple.com/cn/app/id1460783404\">App Store 顺网云电脑</a>","包夜卡 9 小时 3.98 元、新用户免费体验 1 小时"]
+  ]},
+  {p:"达龙云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.dalongyun.com/indexs.php?recharge\">达龙云电脑充值/云豆说明页</a>","云豆计费规则、会员与非会员课时消耗"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.dalongyun.com/\">达龙云电脑官网</a>","产品定位、会员与时长包"]
+  ]},
+  {p:"网易云游戏（云电脑）", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://ps.res.netease.com/cloudgame/cloudpc.html\">网易云游戏·云电脑页</a>","云币计费、独立私有数据盘"],
+    ["用户社区","<a class=\"ext\" href=\"https://apps.apple.com/cn/app/id1564223812\">App Store 网易云游戏</a>","端游会员月卡 88 元、云币充值"]
+  ]},
+  {p:"海马云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://pc.haimacloud.com/\">海马云电脑官网</a>","时长卡档位、精英/史诗会员价格、显卡规格"],
+    ["官方站点","<a class=\"ext\" href=\"https://www.haimacloud.com/\">海马云官网</a>","泰尔实验室「电竞级云电脑」认证、GEAR 掌机"]
+  ]},
+  {p:"极云普惠云电脑", items:[
+    ["官方站点","<a class=\"ext\" href=\"https://www.ji-cloud.cn/news.info_m.php?id=538\">极云普惠云电脑配置与价格说明</a>","标准版/高级版/畅玩版配置与档位（旧口径）"]
+  ]}
+];
+
+const TODOS = [
+  ["胖盒云电脑","按「盒币」计费、一日卡 24 小时活动价 11.85 元等口径均来自第三方测评，未核实到官方域名与官方价格页，故未纳入主表。"],
+  ["极云普惠云电脑","官网价格公示仍为 2018 年口径（标准版 8G/GTX1650 等），在营状态与最新报价均待确认。"],
+  ["华为云电脑（消费者版）","早期消费级云电脑 App 的在营状态未取得官方口径，与华为云 Workspace/Flexus 云桌面非同一产品，待确认。"],
+  ["联通云智电脑月费","融合套餐的月费、默认配置与 Token 额度有效期官方公示不完整，待确认。"],
+  ["京东云 JD Workspaces 免费额度","未见公示免费试用或免费额度，待确认。"],
+  ["金山云云电脑单价","官方文档给出计费维度（vCPU/内存 + 系统盘/数据盘）但未在摘要中给出完整单价，待确认。"],
+  ["深信服 / 锐捷 / 中兴报价","均为项目制或方案商报价，无公开在线价格，待确认。"],
+  ["联想云电脑价目","官网提供 1 元试用与独享显卡档位，但完整价目表未公开，待确认。"],
+  ["网络延迟（出海场景）","国内云电脑面向海外访问的节点分布与时延指标，官方未披露统一口径，待确认。"]
+];
+
+const tableEl = document.getElementById('mainTable');
+PRODUCTS.forEach(function(p){
+  const availTag = p.avail === 'free'
+    ? '<span class="tag free">可免费使用</span>'
+    : '<span class="tag paid">付费或仅 API</span>';
+  const catTag = '<span class="tag ' + CAT_TAG[p.cat] + '">' + CAT[p.cat] + '</span>';
+  const scoreHtml = (p.score === null)
+    ? '<span class="score na">—</span>'
+    : '<span class="score">' + p.score.toFixed(1) + '</span>';
+  const priceHtml = p.price + (p.cny ? '<span class="note-inline" style="display:block;margin-top:3px">' + p.cny + '</span>' : '');
+  const tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td data-label="产品 / 厂商"><span class="pname">' + p.name + '</span><span class="dev">' + p.dev + '</span><span style="display:block;margin-top:6px">' + catTag + availTag + '</span></td>' +
+    '<td data-label="评分">' + scoreHtml + '</td>' +
+    '<td data-label="评分依据"><span class="basis">' + p.basis + '</span></td>' +
+    '<td data-label="官方入口"><a class="ext" href="' + p.site.url + '">' + p.site.label + '</a></td>' +
+    '<td data-label="免费额度">' + p.free + '</td>' +
+    '<td data-label="价格">' + priceHtml + '</td>' +
+    '<td data-label="特点与局限">' + p.note + '</td>';
+  tableEl.appendChild(tr);
+});
+document.getElementById('tableCaption').textContent =
+  '注：评分为主观共识评分（满分 10），非厂商官方指标。价格与免费额度均以 2026-10-08 公开信息为准；标注「待确认」表示本轮未取得可靠官方口径。';
+
+/* ================= 渲染：时间线 ================= */
+const tlEl = document.getElementById('timeline');
+TIMELINE.forEach(function(t){
+  var d = document.createElement('div');
+  d.className = 'tnode' + (t.hot ? ' hot' : '');
+  d.innerHTML = '<div class="when">' + t.when + '</div><div class="axis"><i class="dot"></i></div>' +
+                '<div class="body"><p class="what">' + t.what + '</p><p class="why">' + t.why + '</p></div>';
+  tlEl.appendChild(d);
+});
+
+/* ================= 渲染：核验表 ================= */
+const vEl = document.getElementById('verifyTable');
+VERIFIED.forEach(function(v){
+  var tr = document.createElement('tr');
+  tr.innerHTML = '<td data-label="厂商 / 产品"><span class="pname">' + v.name + '</span></td>' +
+                 '<td data-label="核验结论">' + v.verdict + '</td>' +
+                 '<td data-label="说明">' + v.note + '</td>';
+  vEl.appendChild(tr);
+});
+
+/* ================= 渲染：信源索引 ================= */
+const srcEl = document.getElementById('sourceIndex');
+SOURCES.forEach(function(g){
+  var h = document.createElement('div');
+  h.className = 'srcgrp';
+  var rows = g.items.map(function(it){
+    var link = /^https?:/.test(it[1]) ? '<a class="ext" href="' + it[1] + '">' + it[1] + '</a>' : it[1];
+    link = link.replace(/・/g, '<br>');
+    return '<li class="srcitem">' +
+           '<span class="srclabel">' + it[0] + '</span>' +
+           '<span class="srcbody">' + link +
+           '<span class="srcfield">支撑字段：' + it[2] + '</span></span></li>';
+  }).join('');
+  h.innerHTML = '<h3>' + g.p + '</h3><ul class="srclist">' + rows + '</ul>';
+  srcEl.appendChild(h);
+});
+
+/* ================= 渲染：待确认 ================= */
+const todoEl = document.getElementById('todoList');
+TODOS.forEach(function(t, i){
+  var d = document.createElement('div');
+  d.className = 't';
+  d.innerHTML = '<div class="n">' + (i + 1) + '</div><div class="c"><b>' + t[0] + '：</b>' + t[1] + '</div>';
+  todoEl.appendChild(d);
+});
+
+/* ================= ECharts ================= */
+var C = {primary:'#12564C', accent:'#C4762A', ink:'#1F2329', ink2:'#646A73', ink3:'#8A939B', line:'#DEE3E8'};
+var FONT = '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif';
+
+function renderScore(){
+  var el = document.getElementById('chartScore');
+  if(!el || typeof echarts === 'undefined') return;
+  var data = PRODUCTS.filter(function(p){return p.score !== null;})
+                     .slice().sort(function(a,b){return a.score - b.score;});
+  var chart = echarts.init(el);
+  chart.setOption({
+    grid:{left:8, right:72, top:18, bottom:34, containLabel:true},
+    tooltip:{
+      trigger:'axis', axisPointer:{type:'shadow'},
+      backgroundColor:'#fff', borderColor:C.line, borderWidth:1,
+      textStyle:{color:C.ink, fontFamily:FONT, fontSize:14},
+      formatter:function(ps){
+        var i = ps[0].dataIndex, p = data[i];
+        return '<b>' + p.name + '</b><br/>综合评分：' + p.score.toFixed(1) + ' / 10<br/>类型：' + CAT[p.cat] +
+               '<br/>厂商：' + p.dev + '<br/>评分依据：' + p.basis;
+      }
+    },
+    xAxis:{
+      type:'value', min:0, max:10, splitNumber:5,
+      axisLine:{show:false}, axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#EDF1F4'}},
+      axisLabel:{color:C.ink3, fontFamily:FONT, fontSize:13}
+    },
+    yAxis:{
+      type:'category',
+      data:data.map(function(p){return p.name;}),
+      axisLine:{show:false}, axisTick:{show:false},
+      axisLabel:{color:C.ink, fontFamily:FONT, fontSize:13.5}
+    },
+    series:[{
+      type:'bar', barWidth:'58%',
+      data:data.map(function(p){
+        return {
+          value:p.score,
+          itemStyle:{color:CAT_COLOR[p.cat], borderRadius:[0,3,3,0]}
+        };
+      }),
+      label:{
+        show:true, position:'right', fontFamily:FONT, fontSize:13.5,
+        fontWeight:'bold', color:C.ink, formatter:function(ps){return ps.value.toFixed(1);}
+      }
+    }]
+  });
+  window.addEventListener('resize', function(){chart.resize();});
+}
+
+function renderPrice(){
+  var el = document.getElementById('chartPrice');
+  if(!el || typeof echarts === 'undefined' || !PRICE_POINTS.length) return;
+  var chart = echarts.init(el);
+  chart.setOption({
+    grid:{left:8, right:40, top:26, bottom:56, containLabel:true},
+    tooltip:{
+      trigger:'item',
+      backgroundColor:'#fff', borderColor:C.line, borderWidth:1,
+      textStyle:{color:C.ink, fontFamily:FONT, fontSize:14},
+      formatter:function(ps){
+        var d = ps.data, v = d.value;
+        return '<b>' + d.name + '</b><br/>最低付费月费：' + (v[0] === 0 ? '0（完全免费）' : '¥' + v[0] + '/月') +
+               '<br/>综合评分：' + v[1].toFixed(1);
+      }
+    },
+    xAxis:{
+      type:'value', min:-12, max:380,
+      axisLine:{lineStyle:{color:C.line}}, axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#EDF1F4'}},
+      axisLabel:{color:C.ink3, fontFamily:FONT, fontSize:13, formatter:'{value}'},
+      name:'最低付费月费（元）', nameLocation:'middle', nameGap:34,
+      nameTextStyle:{color:C.ink2, fontFamily:FONT, fontSize:13}
+    },
+    yAxis:{
+      type:'value', min:6.6, max:9.0, splitNumber:5,
+      axisLine:{show:false}, axisTick:{show:false},
+      splitLine:{lineStyle:{color:'#EDF1F4'}},
+      axisLabel:{color:C.ink3, fontFamily:FONT, fontSize:13},
+      name:'综合评分', nameTextStyle:{color:C.ink2, fontFamily:FONT, fontSize:13}
+    },
+    series:[{
+      type:'scatter',
+      symbolSize:16,
+      data:PRICE_POINTS.map(function(p){
+        return {
+          name:p.name,
+          value:[p.x, p.y],
+          free:p.free,
+          label:{position:p.lp, distance:10}
+        };
+      }),
+      itemStyle:{
+        color:function(ps){return ps.data.free ? C.primary : C.accent;},
+        borderColor:'#fff', borderWidth:1.5
+      },
+      label:{
+        show:true, fontFamily:FONT, fontSize:12.5, color:C.ink,
+        formatter:function(ps){return ps.data.name;}
+      },
+      markLine:{
+        silent:true, symbol:'none',
+        lineStyle:{color:C.primary, type:'dashed', width:1, opacity:.55},
+        label:{show:true, position:'insideEndTop', fontFamily:FONT, fontSize:12, color:C.primary,
+               formatter:'完全免费区'},
+        data:[{xAxis:0}]
+      }
+    }]
+  });
+  window.addEventListener('resize', function(){chart.resize();});
+}
+
+renderScore();
+renderPrice();
+</script>
+
+</main>
+
+</body>
+</html>
