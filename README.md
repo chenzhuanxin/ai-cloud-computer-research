@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo.png" width="120" alt="ai-cloud-computer-research"></p>
+
 # 国内外云电脑 / 云桌面（DaaS）产品调研（2026-10）
 
 覆盖 **中国大陆 19 项 + 海外 20 项** 云电脑 / 云桌面（DaaS）产品，四类型全覆盖：企业云桌面 / DaaS、消费级云电脑、GPU 云工作站、云游戏（含对照项）。
